@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2022 at 06:37 AM
+-- Generation Time: Feb 25, 2022 at 09:49 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.15
 
@@ -144,14 +144,21 @@ CREATE TABLE `product` (
   `updated_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `product`
+-- Table structure for table `productmedia`
 --
 
-INSERT INTO `product` (`id`, `p_name`, `p_price`, `p_qun`, `p_stetus`, `created_date`, `updated_date`) VALUES
-(82, 'Demo', 5000, 10, 1, '2022-02-20 18:02:44', NULL),
-(83, 'DD', 5000, 20, 2, '2022-02-20 18:02:43', NULL),
-(84, 'Jay', 100, 10, 1, '2022-02-20 22:02:52', '2022-02-20 18:02:39');
+CREATE TABLE `productmedia` (
+  `imageId` int(11) NOT NULL,
+  `productId` int(11) NOT NULL,
+  `imageName` varchar(100) NOT NULL,
+  `base` tinyint(4) NOT NULL DEFAULT 0,
+  `thumb` tinyint(4) NOT NULL DEFAULT 0,
+  `small` tinyint(4) NOT NULL DEFAULT 0,
+  `gallary` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -190,6 +197,13 @@ ALTER TABLE `product`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `productmedia`
+--
+ALTER TABLE `productmedia`
+  ADD PRIMARY KEY (`imageId`),
+  ADD KEY `fk_product_media` (`productId`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -224,6 +238,12 @@ ALTER TABLE `product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
+-- AUTO_INCREMENT for table `productmedia`
+--
+ALTER TABLE `productmedia`
+  MODIFY `imageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -238,6 +258,12 @@ ALTER TABLE `address`
 --
 ALTER TABLE `category`
   ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `productmedia`
+--
+ALTER TABLE `productmedia`
+  ADD CONSTRAINT `fk_product_media` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -114,6 +114,12 @@ class Controller_Product extends Controller_Core_Action{
 			{
 				throw new Exception("Unable to fetch ID.", 1);
 			}
+			$datas = $productModel->fetchAll("SELECT imageName FROM productmedia WHERE  productId='$productId'");
+
+			foreach ($datas as $data) {
+				unlink($this->getView()->getBaseUrl("Media/Product/"). $data['imageName']);
+			}
+
 			$result = $productModel->delete($productId);
 			if(!$result)
 			{

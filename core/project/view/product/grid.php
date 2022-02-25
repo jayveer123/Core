@@ -81,7 +81,7 @@ $data=$this->getProducts();
 		}
 	}
 	else{
-		echo "<tr><td align='center' colspan='9'>No Record Found</td></tr>";
+		echo "<tr><td align='center' colspan='13'>No Record Found</td></tr>";
 	} 
 	?>
 </table>
