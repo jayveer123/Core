@@ -22,6 +22,9 @@ $data=$this->getProducts();
 
 	<tr>
 		<th>Product Id</th>
+		<th>Base Image</th>
+		<th>Thumb Image</th>
+		<th>Small Image</th>
 		<th>Product Name</th>
 		<th>Product Price</th>
 		<th>Product Quntity</th>
@@ -30,6 +33,7 @@ $data=$this->getProducts();
 		<th>Updated At</th>
 		<th>Edit</th>
 		<th>Delete</th>
+		<th>Media</th>
 	</tr>
 	<?php 
 	if($data){
@@ -39,6 +43,29 @@ $data=$this->getProducts();
 		foreach($data as $row) { ?>
 		<tr>
 			<td><?php echo $id; ?></td>
+			<td>
+				<?php if($row['base']){ ?>
+				<img src="<?php echo 'Media/Product/'.$row['base']; ?>" width=50 height=50>
+				<?php }else{
+					echo "No image Set";
+				} ?>
+			</td>
+
+			<td>
+				<?php if($row['thumb']){ ?>
+				<img src="<?php echo 'Media/Product/'.$row['thumb']; ?>"  width=50 height=50>
+				<?php }else{
+					echo "No image Set";
+				} ?>
+			</td>
+
+			<td>
+				<?php if($row['small']){ ?>
+				<img src="<?php echo 'Media/Product/'.$row['small']; ?>"  width=50 height=50>
+				<?php }else{
+					echo "No image Set";
+				} ?>
+			</td>
 			<td><?php echo $row["p_name"]; ?></td>
 			<td><?php echo $row["p_price"]; ?></td>
 			<td><?php echo $row["p_qun"]; ?></td>
@@ -47,6 +74,7 @@ $data=$this->getProducts();
 			<td><?php echo $row["updated_date"]; ?></td>
 			<td><a href="<?php echo $this->getUrl('product','edit',['id'=>$row['id']],true) ?>">Edit</a></td>
 			<td><a href="<?php echo $this->getUrl('product','delete',['id'=>$row['id']],true) ?>">Delete</a></td>
+			<td><a href="<?php echo $this->getUrl('product_media','grid',['id'=>$row['id']],true) ?>">Media</a></td>
 		</tr>
 		<?php 
 		$id++;

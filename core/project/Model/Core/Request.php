@@ -18,6 +18,10 @@ class Model_Core_Request
 		}
 		return $_POST[$key];
 	}
+	public function getFile()
+    {
+        return $_FILES;
+    }
 	
 	public function getRequest($key = null,$value = null)
 	{

@@ -76,7 +76,14 @@ class Model_Core_View {
 		return $url;
 	}
 	
-
+	public function getBaseUrl($subUrl = null)
+    {
+        $url = "C:/xampp/htdocs/phpGit/Core/core/project/";
+        if($subUrl){
+            $url = $url."/".$subUrl;
+        }
+        return $url;
+    }
 	
 
 

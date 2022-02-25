@@ -35,7 +35,7 @@ class Model_Core_Table
 		return $fetchAll;
 	}
 
-	public function insert(array $data=null)
+	public function insert(array $data)
 	{
 		global $adapter;
 	
@@ -46,8 +46,9 @@ class Model_Core_Table
 		$sth = ("INSERT INTO $this->tableName (" . implode(',',array_keys($data)) . 
 			") VALUES ( ". implode(',', array_values($prep)) . ")");
 
+
 		$insertId=$adapter->insert($sth);
-		//print_r($insertId);
+		
 		if(!$insertId)
 		{
 			throw new Exception("Error Processing Request", 1);
@@ -80,7 +81,7 @@ class Model_Core_Table
 		return $fetchRow;
 	}
 
-	public function update(array $data=null,$primaryKey=null)
+	public function update(array $data=null,$primaryKey=null,$coloumn=null)
 	{
 		global $adapter;
 		$f="";
@@ -90,11 +91,12 @@ class Model_Core_Table
 		}
 		$final=rtrim($f,',');
 
+		if(!$coloumn){
+			$coloumn = $this->getPrimaryKey();
+		}
 
-		$updateQuery="UPDATE $this->tableName SET $final WHERE $this->tableName.$this->primaryKey = $primaryKey";
-		
-		
-
+		$updateQuery="UPDATE $this->tableName SET $final WHERE $this->tableName.$coloumn = $primaryKey";
+	
 		$update=$adapter->update($updateQuery);
 
 		
