@@ -7,7 +7,12 @@ $configs = $this->getConfigs();
 <head>
 </head>
 <body>
-	<button name="Add"><a href="<?php echo $this->getUrl('add') ?>"><h3>Add</h3></a></button>
+	<form align="center">
+		<tr>
+			<button><a href="<?php echo $this->getUrl('config','add') ?>">Add</a></button>
+		</tr>
+	</form>
+	
 	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Config Id</th>
@@ -31,8 +36,9 @@ $configs = $this->getConfigs();
 				<td><?php echo $config->value ?></td>
 				<td><?php echo $config->getStatus($config->status)?></td>
 				<td><?php echo $config->createdDate ?></td>
-				<td><a href="<?php echo $this->getUrl('edit','config',['id'=>$config->id],true) ?>">Edit</a></td>
-				<td><a href="<?php echo $this->getUrl('delete','config',['id'=>$config->id],true) ?>">Delete</a></td>
+				<td><?php echo $config->updatedDate ?></td>
+				<td><a href="<?php echo $this->getUrl('config','edit',['id'=>$config->id],true) ?>">Edit</a></td>
+				<td><a href="<?php echo $this->getUrl('config','delete',['id'=>$config->id],true) ?>">Delete</a></td>
 			</tr>
 			<?php endforeach;	?>
 		<?php endif;  ?>

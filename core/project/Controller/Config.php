@@ -71,7 +71,7 @@ class Controller_Config extends Controller_Core_Action{
 			print_r($e);
 		}
 
-		$this->redirect($this->getView()->getUrl('admin','grid',[],true));
+		$this->redirect($this->getView()->getUrl('config','grid',[],true));
 	}
 	public function addAction()
 	{
@@ -122,7 +122,7 @@ class Controller_Config extends Controller_Core_Action{
 			{
 				throw new Exception("Unable to Delet Record.", 1);
 			}
-		    $this->redirect($this->getView()->getUrl('admin','grid',[],true));
+		    $this->redirect($this->getView()->getUrl('config','grid',[],true));
 		}
 		catch(Exception $e){
 			echo "<pre>";
