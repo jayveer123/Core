@@ -10,33 +10,28 @@ class Block_Category_Edit extends Block_Core_Template
 	
 	public function getCategories()
    	{
-   		return $this->getData('categories');
+   		$categoryModel = Ccc::getModel('category');
+        $categories = $categoryModel->fetchAll("SELECT * FROM `category` ORDER BY `path`");
+        return $categories;
    	}
     public function getCategory()
     {
         return $this->getData('category');
     }
-   	public function pathAction()
+   	public function getPath($categoryId,$path)
     {
-        $adapter = new Model_Core_Adapter();
-        $categoryName = $adapter->fetchPair("SELECT id, c_name FROM category ORDER BY `path` ASC");
-        $categoryPath = $adapter->fetchPair("SELECT id, `path` FROM category  ORDER BY `path` ASC");
-        $categories=[];
-        foreach ($categoryPath as $key => $value) {
-                $explodeArray=explode('/', $value);
-                $tempArray = [];
-
-                foreach ($explodeArray as $keys => $value) {
-                    if(array_key_exists($value,$categoryName)){
-                        array_push($tempArray,$categoryName[$value]);
-                    }
-                }
-
-                $implodeArray = implode('/', $tempArray);
-                $categories[$key]= $implodeArray;
+        $finalPath = NULL;
+        $paths = explode("/",$path);
+        foreach ($paths as $path) {
+            $load = Ccc::getModel('Category');
+            $category = $load->load($path);
+            if($path != $categoryId){
+                $finalPath .= $category->c_name." / ";
+            }else{
+                $finalPath .= $category->c_name;
+            }
         }
-        
-        return $categories;
+        return $finalPath;
     }
 }
 ?>

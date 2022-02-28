@@ -1,6 +1,4 @@
 <?php Ccc::loadClass('Controller_Core_Action'); ?>
-<?php Ccc::loadClass('Model_Admin'); ?>
-<?php Ccc::loadClass('Model_Core_Request'); ?>
 
 <?php
 class Controller_Admin extends Controller_Core_Action{
@@ -24,21 +22,25 @@ class Controller_Admin extends Controller_Core_Action{
 			{
 				throw new Exception("Invalid Request", 1);
 			}	
+
 			$postData = $request->getPost('admin');
 
 			if(!$postData)
 			{
 				throw new Exception("Invalid data posted.", 1);	
 			}
+			$admin = $adminModel;
+			$admin->setdata($postData);
+			
 
-
-			if (!array_key_exists('id',$postData)) {
-
+			if (empty($postData['id'])) {
+				
 				date_default_timezone_set("Asia/Kolkata");
-				$postData['createdDate'] = date('Y-m-d H:m:s');
-
-				$insert = $adminModel->insert($postData);
-
+				$admin->createdDate = date('Y-m-d H:m:s');
+				
+				unset($admin->id);	
+				$insert = $admin->save();
+				
 				if(!$insert)
 				{
 					throw new Exception("System is unable to Insert.", 1);
@@ -46,16 +48,17 @@ class Controller_Admin extends Controller_Core_Action{
 
 			}
 			else{
+				
 				if(!(int)$postData['id'])
 				{
 					throw new Exception("Invalid Request.", 1);
 				}
-				$id = $postData["id"];
+				$admin->id = $postData["id"];
 
 				date_default_timezone_set("Asia/Kolkata");
-				$postData['updatedDate']  = date('Y-m-d H:m:s');
-				
-				$update = $adminModel->update($postData,$id);
+				$admin->updatedDate  = date('Y-m-d H:m:s');
+			
+				$update = $admin->save();
 
 				if(!$update)
 				{
@@ -70,33 +73,35 @@ class Controller_Admin extends Controller_Core_Action{
 
 		$this->redirect($this->getView()->getUrl('admin','grid',[],true));
 	}
+	public function addAction()
+	{
+		$adminModel = Ccc::getModel('Admin');
+		$admin = $adminModel;
+		Ccc::getBlock('Admin_Edit')->setData(['admin'=>$admin])->toHtml();
+	}
 
 	public function editAction()
 	{
 			$adminModel = Ccc::getModel('Admin');
+			$admin = $adminModel;
+
 			$request = $this->getRequest();
 			$id = (int)$request->getRequest('id');
 			if(!$id)
 			{
-				throw new Exception("Invalid Request", 1);
+				throw new Exception("Id Not Found", 1);
+				
 			}
-			$admin = $adminModel->fetchRow("SELECT * FROM admin WHERE id = {$id}");
-			if(!$admin)
+			$adminData = $admin->load($id);
+			if(!$adminData)
 			{
 				throw new Exception("System is unable to find record.", 1);
 			}
-			Ccc::getBlock('Admin_Edit')->addData('admin',$admin)->toHtml();
+			Ccc::getBlock('Admin_Edit')->addData('admin',$adminData)->toHtml();
 	}
-
-	public function addAction()
-	{
-		Ccc::getBlock('Admin_Add')->toHtml();
-	}
-
 	public function deleteAction()
 	{
 		try{
-
 			$adminModel = Ccc::getModel('Admin');
 			$request = $this->getRequest();
 			if(!$request->getRequest('id'))
@@ -110,7 +115,9 @@ class Controller_Admin extends Controller_Core_Action{
 			{
 				throw new Exception("Unable to fetch ID.", 1);
 			}
-			$result = $adminModel->delete($adminId);
+			$admin = $adminModel;
+
+			$result = $admin->load($adminId)->delete();
 			if(!$result)
 			{
 				throw new Exception("Unable to Delet Record.", 1);
@@ -128,11 +135,7 @@ class Controller_Admin extends Controller_Core_Action{
 	{
 		echo "error";
 	}
-	public function redirect($url)
-	{
-		header("location:$url");
-		exit();
-	}
+	
 
 
 }

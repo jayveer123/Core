@@ -1,6 +1,7 @@
-<?php
+<?php 
 
-$medias = $this->getMedias();
+$medias = $this->getMedias(); 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,25 +35,24 @@ $medias = $this->getMedias();
             <?php $i = 1; ?>
             <?php foreach ($medias as $media): ?>
             <tr>
-                <td><?php echo $media['imageId'] ?></td>
-                <td><?php echo $media['productId'] ?></td>
-                <td><?php echo $media['imageName'] ?></td>
-                <input type="hidden" name="media<?php echo $i; ?>[imageId]" value=<?php echo $media['imageId'] ?> >
-                <input type="hidden" name="media<?php echo $i; ?>[imageName]" value=<?php echo $media['imageName'] ?> >
+                <td><?php echo $media->imageId ?></td>
+                <td><?php echo $media->productId ?></td>
+                <td><?php echo $media->imageName ?></td>
+                
                 <td>
-                    <input type="radio" name="media[base]" value = "<?php echo $media['imageId'] ?>" <?php echo $media['base'] == 1 ? 'checked' : ''; ?> >
+                    <input type="radio" name="media[base]" value = "<?php echo $media->imageId ?>" <?php echo $this->selected($media->imageId,'base'); ?> >
                 </td>
                 <td>
-                    <input type="radio" name="media[thumb]" value = "<?php echo $media['imageId'] ?>" <?php echo $media['thumb'] == 1 ? 'checked' : ''; ?> >
+                    <input type="radio" name="media[thumb]" value = "<?php echo $media->imageId ?>" <?php echo $this->selected($media->imageId,'thumb'); ?> >
                 </td>
                 <td>
-                    <input type="radio" name="media[small]" value = "<?php echo $media['imageId'] ?>" <?php echo $media['small'] == 1 ? 'checked' : ''; ?> >
+                    <input type="radio" name="media[small]" value = "<?php echo $media->imageId ?>" <?php echo $this->selected($media->imageId,'small'); ?> >
                 </td>
                 <td>
-                    <input type="checkbox" name="media<?php echo $i; ?>[gallary]" <?php echo $media['gallary'] == 1 ? 'checked' : ''; ?>>
+                    <input type="checkbox" name="media[gallery][]" value="<?php echo $media->imageId ?>" <?php echo $media->gallery == 1 ? 'checked' : ''; ?>>
                 </td>
                 <td>
-                    <input type="checkbox" name="media<?php echo $i; ?>[remove]" >
+                    <input type="checkbox" name="media[remove][]" value="<?php echo $media->imageId ?>">
                 </td>
             </tr>
             <?php $i++; endforeach; ?>

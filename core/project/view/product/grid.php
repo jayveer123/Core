@@ -1,7 +1,7 @@
 <?php
+error_reporting(0);
 
-
-$data=$this->getProducts();
+$products=$this->getProducts();
 
 ?>
 
@@ -22,13 +22,13 @@ $data=$this->getProducts();
 
 	<tr>
 		<th>Product Id</th>
-		<th>Base Image</th>
-		<th>Thumb Image</th>
-		<th>Small Image</th>
 		<th>Product Name</th>
 		<th>Product Price</th>
 		<th>Product Quntity</th>
 		<th>Product Stetus</th>
+		<th>Base</th>
+		<th>Thumb</th>
+		<th>Small</th>
 		<th>Created At</th>
 		<th>Updated At</th>
 		<th>Edit</th>
@@ -36,45 +36,35 @@ $data=$this->getProducts();
 		<th>Media</th>
 	</tr>
 	<?php 
-	if($data){
+	if($products){
 
 		$id=1;
 
-		foreach($data as $row) { ?>
+		foreach($products as $product) { ?>
 		<tr>
 			<td><?php echo $id; ?></td>
+			<td><?php echo $product->p_name; ?></td>
+			<td><?php echo $product->p_price; ?></td>
+			<td><?php echo $product->p_qun; ?></td>
+			<td><?php if($product->p_stetus == 1){ echo "Active";}else{ echo "Deactive";} ?></td>
+
 			<td>
-				<?php if($row['base']){ ?>
-				<img src="<?php echo 'Media/Product/'.$row['base']; ?>" width=50 height=50>
-				<?php }else{
-					echo "No image Set";
-				} ?>
+				<img src="<?php echo "Media/Product/".$this->getMedia($product->base)['imageName']  ?>" alt="No Image Found" width="50" height="50">
 			</td>
 
 			<td>
-				<?php if($row['thumb']){ ?>
-				<img src="<?php echo 'Media/Product/'.$row['thumb']; ?>"  width=50 height=50>
-				<?php }else{
-					echo "No image Set";
-				} ?>
+				<img src="<?php echo "Media/Product/".$this->getMedia($product->thumb)['imageName']  ?>" alt="No Image Found" width="50" height="50">
 			</td>
 
 			<td>
-				<?php if($row['small']){ ?>
-				<img src="<?php echo 'Media/Product/'.$row['small']; ?>"  width=50 height=50>
-				<?php }else{
-					echo "No image Set";
-				} ?>
+				<img src="<?php echo "Media/Product/".$this->getMedia($product->small)['imageName']  ?>" alt="No Image Found" width="50" height="50">
 			</td>
-			<td><?php echo $row["p_name"]; ?></td>
-			<td><?php echo $row["p_price"]; ?></td>
-			<td><?php echo $row["p_qun"]; ?></td>
-			<td><?php if($row["p_stetus"] == 1){ echo "Active";}else{ echo "Deactive";} ?></td>
-			<td><?php echo $row["created_date"]; ?></td>
-			<td><?php echo $row["updated_date"]; ?></td>
-			<td><a href="<?php echo $this->getUrl('product','edit',['id'=>$row['id']],true) ?>">Edit</a></td>
-			<td><a href="<?php echo $this->getUrl('product','delete',['id'=>$row['id']],true) ?>">Delete</a></td>
-			<td><a href="<?php echo $this->getUrl('product_media','grid',['id'=>$row['id']],true) ?>">Media</a></td>
+
+			<td><?php echo $product->createdDate; ?></td>
+			<td><?php echo $product->updatedDate; ?></td>
+			<td><a href="<?php echo $this->getUrl('product','edit',['id'=>$product->id],true) ?>">Edit</a></td>
+			<td><a href="<?php echo $this->getUrl('product','delete',['id'=>$product->id],true) ?>">Delete</a></td>
+			<td><a href="<?php echo $this->getUrl('product_media','grid',['id'=>$product->id],true) ?>">Media</a></td>
 		</tr>
 		<?php 
 		$id++;

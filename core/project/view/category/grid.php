@@ -1,8 +1,8 @@
 <?php
 
-$data = $this->getCategories();
+$categories = $this->getCategories();
 
-$result = $this->pathAction();
+
 
 
 ?>
@@ -25,30 +25,31 @@ $result = $this->pathAction();
 	<tr>
 		<th>Category Id</th>
 		<th>Category Name</th>
-		<th>Product Stetus</th>
-		<th>Path</th>
+		<th>Category Path</th>
+		<th>Category Stetus</th>
 		<th>Created At</th>
 		<th>Updated At</th>
 		<th>Edit</th>
 		<th>Delete</th>
+		
 	</tr>
 	<?php 
-	if($data){
-		$id=1;
+	if($categories){
+		
 
-		foreach($data as $row) { ?>
+		foreach($categories as $category) { ?>
 		<tr>
-			<td><?php echo $id; ?></td>
-			<td><?php echo $result[$row['id']]; ?></td>
-			<td><?php if($row["c_stetus"] == 1){ echo "Active";}else{ echo "Deactive";} ?></td>
-			<td><?php echo $row["path"]; ?></td>
-			<td><?php echo $row["created_date"]; ?></td>
-			<td><?php echo $row["updated_date"]; ?></td>
-			<td><a href="<?php echo $this->getUrl('category','edit',['id'=>$row['id']],true) ?>">Edit</a></td>
-			<td><a href="<?php echo $this->getUrl('category','delete',['id'=>$row['id']],true) ?>">Delete</a></td>
+			<td><?php echo $category->id; ?></td>
+			<td><?php echo $category->c_name; ?></td>
+			<td><?php echo $this->getPath($category->id,$category->path); ?></td>
+			<td><?php if($category->c_stetus == 1){ echo "Active";}else{ echo "Deactive";} ?></td>
+			<td><?php echo $category->createdDate; ?></td>
+			<td><?php echo $category->updatedDate; ?></td>
+			<td><a href="<?php echo $this->getUrl('category','edit',['id'=>$category->id],true) ?>">Edit</a></td>
+			<td><a href="<?php echo $this->getUrl('category','delete',['id'=>$category->id],true) ?>">Delete</a></td>	
 		</tr>
 		<?php 
-		$id++;
+		
 		} 
 	}
 	else{

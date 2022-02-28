@@ -14,7 +14,11 @@ class Block_Customer_Edit extends Block_Core_Template
    	}
    	public function getAddress()
    	{
-   		return $this->getData('address');
+   		$address = $this->getData('address');
+   		if($address == null){
+            return Ccc::getModel('Customer_Address');
+        }
+        return $address;
    	}
 }
 ?>

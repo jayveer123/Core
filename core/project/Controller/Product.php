@@ -1,6 +1,4 @@
 <?php Ccc::loadClass('Controller_Core_Action'); ?>
-<?php Ccc::loadClass('Model_Product'); ?>
-<?php Ccc::loadClass('Model_Core_Request'); ?>
 
 	
 <?php
@@ -26,44 +24,48 @@ class Controller_Product extends Controller_Core_Action{
 			{
 				throw new Exception("Invalid Request", 1);
 			}	
+
 			$postData = $request->getPost('product');
-			
+
 			if(!$postData)
 			{
 				throw new Exception("Invalid data posted.", 1);	
 			}
+			$product = $productModel;
+			$product->setdata($postData);
+			
 
-
-
-			if (!array_key_exists('id',$postData)) {
-
+			if (empty($postData['id'])) {
 				
 				date_default_timezone_set("Asia/Kolkata");
-				$postData['created_date'] = date('Y-m-d H:m:s');
-
-				$insert = $productModel->insert($postData);
-
+				$product->createdDate = date('Y-m-d H:m:s');
+				
+				unset($product->id);	
+				$insert = $product->save();
+				
 				if(!$insert)
 				{
 					throw new Exception("System is unable to Insert.", 1);
 				}
+
 			}
 			else{
-
+				
 				if(!(int)$postData['id'])
 				{
 					throw new Exception("Invalid Request.", 1);
 				}
-				$id = $postData["id"];
-				$postData['updated_date']  = date('Y-m-d H:m:s');
-				$update = $productModel->update($postData,$id);
+				$product->id = $postData["id"];
 
+				date_default_timezone_set("Asia/Kolkata");
+				$product->updatedDate  = date('Y-m-d H:m:s');
+			
+				$update = $product->save();
 
 				if(!$update)
 				{
 					throw new Exception("System is unable to Update.", 1);
-				}
-
+				}	
 			}
 			
 			
@@ -94,7 +96,8 @@ class Controller_Product extends Controller_Core_Action{
 
 	public function addAction()
 	{	
-		Ccc::getBlock('Product_Add')->toHtml();
+		$productModel = Ccc::getModel('Product');	
+		Ccc::getBlock('Product_Edit')->setData(['product'=>$productModel])->toHtml();
 	}
 
 	public function deleteAction()

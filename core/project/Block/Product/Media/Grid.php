@@ -13,8 +13,18 @@ class Block_Product_Media_Grid extends Block_Core_Template
         $request = Ccc::getFront()->getRequest();
         $productId = $request->getRequest('id');
         $productModel = Ccc::getModel('Product_Media');
-        $product = $productModel->fetchAll("SELECT * FROM `productmedia` WHERE `productId` = $productId ");
+        $product = $productModel->fetchAll("SELECT * FROM `product_media` WHERE `productId` = $productId ");
         return $product;
+    }
+    public function selected($mediaId,$column)
+    {
+        $request = Ccc::getFront()->getRequest();
+        $product_id = $request->getRequest('id');
+        $productModel = Ccc::getModel('Product');
+        $select = $productModel->fetchAll("SELECT * FROM `product` WHERE `$column` = '$mediaId'");
+        if($select){
+            return 'checked';
+        }
     }
 }
 

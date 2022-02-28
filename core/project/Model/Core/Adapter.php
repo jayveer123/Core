@@ -65,7 +65,10 @@ class Model_Core_Adapter{
     public function fetchRow($query)
     {
         $result = $this->query($query);
-        return $result->fetch_row();
+        if($result->num_rows){
+            return $result->fetch_assoc();    
+        }
+        return false;
     }
     public function fetchAssos($query)
     {

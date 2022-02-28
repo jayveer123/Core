@@ -14,28 +14,24 @@ class Block_Category_Grid extends Block_Core_Template {
 		$categories = $categoryModel->fetchAll("SELECT * FROM category ORDER BY `path` ASC");
 		return $categories;
 	}
-	 public function pathAction()
+	public function getPath($categoryId,$path)
     {
-
-        $adapter = new Model_Core_Adapter();
-
-        $categoryName = $adapter->fetchPair("SELECT id, c_name FROM category ORDER BY `path` ASC");
-        $categoryPath = $adapter->fetchPair("SELECT id, `path` FROM category ORDER BY `path` ASC");
-        $categories=[];
-        foreach ($categoryPath as $key => $value) {
-                $explodeArray=explode('/', $value);
-                $tempArray = [];
-
-                foreach ($explodeArray as $keys => $value) {
-                    if(array_key_exists($value,$categoryName)){
-                        array_push($tempArray,$categoryName[$value]);
-                    }
-                }
-
-                $implodeArray = implode('/', $tempArray);
-                $categories[$key]= $implodeArray;
+        $finalPath = NULL;
+        $paths = explode("/",$path);
+        foreach ($paths as $path)
+         {
+            $categoryModel = Ccc::getModel('Category');
+            $category = $categoryModel->fetchRow("SELECT * FROM `category` WHERE `id` = '$path' ");
+            if($path != $categoryId)
+            {
+                $finalPath .= $category->c_name ." / ";
+            }
+            else
+            {
+                $finalPath .= $category->c_name;
+            }
         }
-        return $categories;
+        return $finalPath;
     }
 	
 }
