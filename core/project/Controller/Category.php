@@ -17,6 +17,7 @@ class Controller_Category extends Controller_Core_Action{
 		try{
 
 			$categoryModel = Ccc::getModel('Category');
+
             $request = $this->getRequest();
             $id = $request->getRequest('id');
 
@@ -59,10 +60,13 @@ class Controller_Category extends Controller_Core_Action{
                 }
                 else{
                     $categoryData->createdDate = date('y-m-d h:m:s');
-                    
+
                     if(!$categoryData->parent_id){
                         unset($categoryData->parent_id);
+
                         $insertId = $categoryModel->save();
+
+                        
                         if(!$insertId){
                             throw new Exception("system is unabel to insert your data", 1);
                         }
@@ -132,6 +136,12 @@ class Controller_Category extends Controller_Core_Action{
                 throw new Exception("Invalid Request", 1);
             }
             $id = $request->getRequest('id');
+
+            $datas = $categoryModel->fetchAll("SELECT imageName FROM category_media WHERE  categoryId='$id'");
+            foreach ($datas as $data) {
+                unlink($this->getView()->getBaseUrl("Media/Category/"). $data->imageName);
+            }
+
             $result = $categoryModel->load($id)->delete();
             if(!$result){
                 throw new Exception("System is unable to delete data.", 1);

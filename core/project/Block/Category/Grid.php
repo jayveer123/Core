@@ -33,6 +33,18 @@ class Block_Category_Grid extends Block_Core_Template {
         }
         return $finalPath;
     }
+
+    public function getMedia($imageId)
+    {
+        $mediaModel=Ccc::getModel('Category_Media');
+        $query="SELECT * FROM `category_media` WHERE `imageId` = {$imageId}";
+        $media = $mediaModel->fetchAll($query);
+
+        if($media){
+            return $media[0]->getData();    
+        }
+        return false;
+    }
 	
 }
 

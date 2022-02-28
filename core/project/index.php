@@ -12,6 +12,7 @@
 		<td><a href="index.php?c=product&a=grid">Product</a></td>
 		<td><a href="index.php?c=customer&a=grid">Customer</a></td>
 		<td><a href="index.php?c=category&a=grid">Category</a></td>
+		<td><a href="index.php?c=config&a=grid">Config</a></td>
 	</tr>
 </table>
 </body>
@@ -28,11 +29,13 @@ class Ccc
 	public static $front = null;
 	public static function loadFile($path)
 	{
+		
 		require_once($path);
 	}
 	public static function loadClass($className)
 	{
 		$path = str_replace("_", "/", $className).'.php';
+
 		Ccc::loadFile($path);
 	}
 	public static function getFront()
