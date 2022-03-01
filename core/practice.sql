@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2022 at 06:09 AM
+-- Generation Time: Mar 01, 2022 at 09:32 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.15
 
@@ -20,24 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `practice`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `address`
---
-
-CREATE TABLE `address` (
-  `address_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
-  `address` text DEFAULT NULL,
-  `postal_code` int(11) DEFAULT NULL,
-  `city` varchar(20) DEFAULT NULL,
-  `state` varchar(10) DEFAULT NULL,
-  `country` varchar(20) DEFAULT NULL,
-  `billing` tinyint(1) NOT NULL DEFAULT 0,
-  `shipping` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -77,23 +59,12 @@ CREATE TABLE `category` (
   `c_name` varchar(50) NOT NULL,
   `c_stetus` int(11) NOT NULL DEFAULT 1,
   `path` varchar(500) NOT NULL,
+  `base` int(11) DEFAULT NULL,
+  `thumb` int(11) DEFAULT NULL,
+  `small` int(11) DEFAULT NULL,
   `createdDate` datetime NOT NULL,
   `updatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`id`, `parent_id`, `c_name`, `c_stetus`, `path`, `createdDate`, `updatedDate`) VALUES
-(179, NULL, 'bedroom', 1, '179', '2022-02-22 02:02:06', NULL),
-(200, NULL, 'Kitchen', 1, '200', '2022-02-27 11:02:10', NULL),
-(201, 200, 'Gas', 1, '200/201', '2022-02-27 01:02:08', NULL),
-(202, 179, 'Bed', 1, '179/202', '2022-02-27 01:02:19', NULL),
-(203, 202, 'King', 1, '179/202/203', '2022-02-27 01:02:27', NULL),
-(204, NULL, 'Living Room', 1, '204', '2022-02-27 02:02:52', NULL),
-(209, NULL, 'TV', 1, '209', '2022-02-27 03:02:41', '2022-02-27 03:02:26'),
-(210, 209, 'Samsung', 1, '209/210', '2022-02-27 03:02:47', '2022-02-27 03:02:48');
 
 -- --------------------------------------------------------
 
@@ -105,24 +76,31 @@ CREATE TABLE `category_media` (
   `imageId` int(11) NOT NULL,
   `categoryId` int(11) NOT NULL,
   `imageName` varchar(100) NOT NULL,
-  `base` tinyint(1) NOT NULL DEFAULT 0,
-  `thumb` tinyint(1) NOT NULL DEFAULT 0,
-  `small` tinyint(1) NOT NULL DEFAULT 0,
-  `gallary` tinyint(1) NOT NULL DEFAULT 0
+  `gallery` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `config`
+--
+
+CREATE TABLE `config` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `code` varchar(200) NOT NULL,
+  `value` varchar(100) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `createdDate` datetime NOT NULL,
+  `updatedDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `category_media`
+-- Dumping data for table `config`
 --
 
-INSERT INTO `category_media` (`imageId`, `categoryId`, `imageName`, `base`, `thumb`, `small`, `gallary`) VALUES
-(1, 179, 'demo.jpg', 0, 0, 0, 0),
-(2, 179, '5.jpg', 0, 0, 0, 0),
-(3, 179, '5.jpg', 0, 0, 0, 0),
-(4, 179, '5.jpg', 1, 0, 0, 0),
-(5, 179, '5.jpg', 0, 0, 0, 0),
-(6, 179, '5.jpg', 0, 0, 0, 0),
-(7, 179, '5.jpg', 0, 0, 0, 0);
+INSERT INTO `config` (`id`, `name`, `code`, `value`, `status`, `createdDate`, `updatedDate`) VALUES
+(2, 'a', 'b', 'c', 2, '2022-02-28 23:02:35', '2022-02-28 23:02:44');
 
 -- --------------------------------------------------------
 
@@ -144,6 +122,40 @@ CREATE TABLE `customer` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customer_address`
+--
+
+CREATE TABLE `customer_address` (
+  `address_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `address` text DEFAULT NULL,
+  `postal_code` int(11) DEFAULT NULL,
+  `city` varchar(20) DEFAULT NULL,
+  `state` varchar(10) DEFAULT NULL,
+  `country` varchar(20) DEFAULT NULL,
+  `billing` tinyint(1) NOT NULL DEFAULT 0,
+  `shipping` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `page`
+--
+
+CREATE TABLE `page` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `code` varchar(200) NOT NULL,
+  `content` text NOT NULL,
+  `status` tinyint(1) DEFAULT 1,
+  `createdDate` datetime NOT NULL,
+  `updatedDate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product`
 --
 
@@ -153,19 +165,12 @@ CREATE TABLE `product` (
   `p_price` float NOT NULL,
   `p_qun` int(10) NOT NULL,
   `p_stetus` int(11) NOT NULL DEFAULT 1,
-  `base` int(11) DEFAULT 0,
-  `small` int(11) DEFAULT 0,
-  `thumb` int(11) DEFAULT 0,
+  `base` int(11) DEFAULT NULL,
+  `small` int(11) DEFAULT NULL,
+  `thumb` int(11) DEFAULT NULL,
   `createdDate` datetime DEFAULT NULL,
   `updatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `product`
---
-
-INSERT INTO `product` (`id`, `p_name`, `p_price`, `p_qun`, `p_stetus`, `base`, `small`, `thumb`, `createdDate`, `updatedDate`) VALUES
-(95, 'Laptop', 6000, 10, 1, 24, 26, 25, '2022-02-27 20:02:44', '2022-02-27 22:02:31');
 
 -- --------------------------------------------------------
 
@@ -180,25 +185,50 @@ CREATE TABLE `product_media` (
   `gallery` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `product_media`
+-- Table structure for table `salesmen`
 --
 
-INSERT INTO `product_media` (`imageId`, `productId`, `imageName`, `gallery`) VALUES
-(24, 95, 'Screenshot_(4)20220228055329.png', 0),
-(25, 95, 'Screenshot_(13)20220228060734.png', 0),
-(26, 95, 'Screenshot_(12)20220228060836.png', 0);
+CREATE TABLE `salesmen` (
+  `id` int(11) NOT NULL,
+  `firstName` varchar(50) NOT NULL,
+  `lastName` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `mobile` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `createdDate` datetime NOT NULL,
+  `updatedDate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `salesmen`
+--
+
+INSERT INTO `salesmen` (`id`, `firstName`, `lastName`, `email`, `mobile`, `status`, `createdDate`, `updatedDate`) VALUES
+(2, 'JJ', 'HAHAHA', 'jj@g.com', 789456123, 2, '2022-03-01 12:03:56', '2022-03-01 12:03:50');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vendor`
+--
+
+CREATE TABLE `vendor` (
+  `id` int(11) NOT NULL,
+  `firstName` varchar(1000) NOT NULL,
+  `lastName` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `mobile` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `createdDate` datetime NOT NULL,
+  `updatedDate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `address`
---
-ALTER TABLE `address`
-  ADD PRIMARY KEY (`address_id`),
-  ADD KEY `address_ibfk_1` (`customer_id`);
 
 --
 -- Indexes for table `admin`
@@ -211,7 +241,10 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `category_ibfk_1` (`parent_id`);
+  ADD KEY `category_ibfk_1` (`parent_id`),
+  ADD KEY `c_bese` (`base`),
+  ADD KEY `c_thumb` (`thumb`),
+  ADD KEY `c_small` (`small`);
 
 --
 -- Indexes for table `category_media`
@@ -221,9 +254,28 @@ ALTER TABLE `category_media`
   ADD KEY `categoryId` (`categoryId`);
 
 --
+-- Indexes for table `config`
+--
+ALTER TABLE `config`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `customer_address`
+--
+ALTER TABLE `customer_address`
+  ADD PRIMARY KEY (`address_id`),
+  ADD KEY `address_ibfk_1` (`customer_id`);
+
+--
+-- Indexes for table `page`
+--
+ALTER TABLE `page`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -243,44 +295,68 @@ ALTER TABLE `product_media`
   ADD KEY `fk_product_media` (`productId`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indexes for table `salesmen`
 --
+ALTER TABLE `salesmen`
+  ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for table `address`
+-- Indexes for table `vendor`
 --
-ALTER TABLE `address`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+ALTER TABLE `vendor`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
 
 --
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=213;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
 
 --
 -- AUTO_INCREMENT for table `category_media`
 --
 ALTER TABLE `category_media`
-  MODIFY `imageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `imageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `config`
+--
+ALTER TABLE `config`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+
+--
+-- AUTO_INCREMENT for table `customer_address`
+--
+ALTER TABLE `customer_address`
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `page`
+--
+ALTER TABLE `page`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `product_media`
@@ -289,26 +365,41 @@ ALTER TABLE `product_media`
   MODIFY `imageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT for table `salesmen`
 --
+ALTER TABLE `salesmen`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for table `address`
+-- AUTO_INCREMENT for table `vendor`
 --
-ALTER TABLE `address`
-  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `vendor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
 
 --
 -- Constraints for table `category`
 --
 ALTER TABLE `category`
-  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `category_ibfk_2` FOREIGN KEY (`base`) REFERENCES `category_media` (`imageId`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `category_ibfk_3` FOREIGN KEY (`thumb`) REFERENCES `category_media` (`imageId`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `category_ibfk_4` FOREIGN KEY (`small`) REFERENCES `category_media` (`imageId`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `category_media`
 --
 ALTER TABLE `category_media`
   ADD CONSTRAINT `category_media_ibfk_1` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `customer_address`
+--
+ALTER TABLE `customer_address`
+  ADD CONSTRAINT `customer_address_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `product`

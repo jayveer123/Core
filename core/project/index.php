@@ -13,6 +13,9 @@
 		<td><a href="index.php?c=customer&a=grid">Customer</a></td>
 		<td><a href="index.php?c=category&a=grid">Category</a></td>
 		<td><a href="index.php?c=config&a=grid">Config</a></td>
+		<td><a href="index.php?c=page&a=grid">Page</a></td>
+		<td><a href="index.php?c=salesmen&a=grid">Salesmen</a></td>
+		<td><a href="index.php?c=vendor&a=grid">Vendor</a></td>
 	</tr>
 </table>
 </body>
