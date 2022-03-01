@@ -1,6 +1,7 @@
 <?php
 
 $vendor=$this->getvendor(); 
+$address = $this->getAddress();
 
 ?>
 <html>
@@ -39,6 +40,45 @@ $vendor=$this->getvendor();
 	<td><label>Stetus :-</label></td>
 	<td><input type="radio" name="vendor[status]" value="1" <?php if($vendor->status==1){echo "checked";} ?>>Active</td>
 	<td><input type="radio" name="vendor[status]" value="2" <?php if($vendor->status==2){echo "checked";}?>>DeActive</td>
+	</tr>
+
+	<tr>
+		<td colspan="2" align="center"><b>Address Details</b></td>
+	</tr>
+
+	
+
+	<tr>
+	<td><label>Address :-</label></td>
+	<td><textarea rows="5" cols="20" name="address[address]"><?php echo $address->address; ?></textarea></td>
+	</tr>
+
+	<input type="text" name="address[vendor_id] " value="<?php echo $address->vendor_id ?>" hidden>
+	<input type="text" name="address[id] " value="<?php echo $address->id ?>" hidden>
+
+	<tr>
+	<td><label>Postal Code :-</label></td>
+	<td><input type="number" name="address[postal_code]" value="<?php echo $address->postal_code; ?>" id="postal" placeholder="Enter Postal Code"></td>
+	</tr>
+
+	<tr>
+	<td><label>City :-</label></td>
+	<td><input type="text" name="address[city]" value="<?php echo $address->city; ?>" id="city" placeholder="Enter City"></td>
+	</tr>
+
+	<tr>
+	<td><label>State :-</label></td>
+	<td><input type="text" name="address[state]" id="state" value="<?php echo $address->state; ?>" placeholder="Enter State"></td>
+	</tr>
+
+	<tr>
+	<td><label>Country :-</label></td>
+	<td><input type="text" name="address[country]" id="country" value="<?php echo $address->country; ?>" placeholder="Enter country"></td>
+	</tr>
+
+	<tr>
+	<td>Billing Address<input type="checkbox" name="address[billing]" value="1" <?php if($address->billing==1){echo "checked";} ?> id="billing"></td>
+	<td>Shipping Address<input type="checkbox" name="address[shipping]" value="1" <?php if($address->shipping==1){echo "checked";} ?> id="shipping"></td>
 	</tr>
 
 	<tr>

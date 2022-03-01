@@ -14,6 +14,14 @@ class Block_Vendor_Edit extends Block_Core_Template
 	{
 		return $this->getData('vendor');
 	}
+	public function getAddress()
+   	{
+   		$address = $this->getData('address');
+   		if($address == null){
+            return Ccc::getModel('Vendor_Address');
+        }
+        return $address;
+   	}
 }
 
 ?>

@@ -30,13 +30,13 @@ class Controller_Vendor extends Controller_Core_Action{
 		{	
 			throw new Exception("System is unable to find record.", 1);	
 		}
-		/*$addressModel = Ccc::getModel('Customer_Address');
-		$address = $addressModel->load($id,'customer_id');
+		$addressModel = Ccc::getModel('Vendor_Address');
+		$address = $addressModel->load($id,'vendor_id');
 		if(!$address)
 		{
-			$address = ['customer_id' => $customer['customer_id']];	
-		}*/
-		Ccc::getBlock('Vendor_Edit')->addData('vendor',$vendor)->toHtml();
+			$address = ['vendor_id' => $customer['vendor_id']];	
+		}
+		Ccc::getBlock('Vendor_Edit')->addData('vendor',$vendor)->addData('address',$address)->toHtml();
 	}
 	public function deleteAction()
 	{
@@ -105,12 +105,58 @@ class Controller_Vendor extends Controller_Core_Action{
 			$update = $vendor->save();
 		}	 
 	}
+	protected function saveAddress($vendorId)
+	{	
+
+		$addressModel = Ccc::getModel('Vendor_Address');
+		$request = $this->getRequest();
+		if(!$request->getPost('address'))
+		{
+			throw new Exception("Invalid Request", 1);
+		}	
+		$postData = $request->getPost('address');
+		if(!$postData)
+		{
+			throw new Exception("Invalid data posted.", 1);	
+		}
+		$address = $addressModel;
+		$address->setData($postData);
+
+		if($address->id == null)
+		{	
+			$address->vendor_id = $vendorId;
+			unset($address->id);
+			$insert = $address->save();
+			if(!$insert)
+			{
+				throw new Exception("System is unable to Insert.", 1);
+			}
+		}
+		else
+		{
+			$address->billing = (!array_key_exists('billing',$postData))?2:1;
+			$address->shipping = (!array_key_exists('shipping',$postData))?2:1;
+			$update = $address->save();
+			if(!$update)
+			{
+				throw new Exception("System is unable to Update.", 1);
+			}
+		}
+	}
 	public function saveAction()
 	{
 		error_reporting(0);
 
 		try{
 			$vendorId=$this->saveVendor();
+			$request = $this->getRequest();
+
+			if(!$request->getPost('address'))
+			{
+				$this->redirect($this->getView()->getUrl('vendor','grid',[],true));
+			}
+
+			$this->saveAddress($vendorId);
 			
 
 			$this->redirect($this->getView()->getUrl('vendor','grid',[],true));
