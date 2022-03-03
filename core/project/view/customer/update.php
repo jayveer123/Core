@@ -5,16 +5,12 @@ $address = $this->getAddress();
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Update Data</title>
-</head>
-<body>
+
 
 	<table align="center" border="1">
+
+<h3 align="center">* Process Record With Customer *</h3>
+
 	<form method="POST" action="<?php echo $this->getUrl('customer','save',['id'=>$customer->id],true) ?>">
 
 	<input type="text" name="customer[id]" value="<?php echo $customer->id; ?>" hidden />
@@ -91,5 +87,3 @@ $address = $this->getAddress();
 	</tr>
 </form>
 </table>
-</body>
-</html>

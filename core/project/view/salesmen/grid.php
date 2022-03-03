@@ -3,16 +3,10 @@
 $salesmens=$this->getSalesmens();
 
 ?>
-<html>
-<head>
-</head>
-<body>
-	<form align="center">
-		<tr>
-			<td><button><a href="<?php echo $this->getUrl('salesmen','add') ?>">Add New</a></button></td>
-		</tr>
-	</form>
+
+<h3 align="center">* Salesman Grid *</h3>
 	<table border="1" width="100%" cellspacing="4">
+		<button><a href="<?php echo $this->getUrl('salesmen','add') ?>">Add New</a></button>
 		<tr>
 			<th>Id</th>
 			<th>First Name</th>
@@ -27,6 +21,7 @@ $salesmens=$this->getSalesmens();
 		</tr>
 		<?php if($salesmens){ ?>
 			<?php foreach ($salesmens as $salesmen) { ?>
+			<tr>
 				<td><?php echo $salesmen->id; ?></td>
 				<td><?php echo $salesmen->firstName; ?></td>
 				<td><?php echo $salesmen->lastName; ?></td>
@@ -41,9 +36,11 @@ $salesmens=$this->getSalesmens();
 				<td>
 					<a href="<?php echo $this->getUrl('salesmen','delete',['id'=>$salesmen->id],true)?>">Delete</a>
 				</td>
+
 			<?php } ?>
 		<?php }else{ ?>
 			<td colspan="10">No Record Found</td>
+			</tr>
 		<?php } ?>
 	</table>
 	

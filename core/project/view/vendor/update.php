@@ -4,15 +4,9 @@ $vendor=$this->getvendor();
 $address = $this->getAddress();
 
 ?>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Crud With Class And Methos</title>
-</head>
-<body>
 
-<h3 align="center">* Insert Record Vendors*</h3>
+
+<h3 align="center">* Process Record With Vendor *</h3>
 <table align="center">
 <form method="POST" action="<?php echo $this->getUrl('vendor','save',['id'=>$vendor->id],true) ?>">
 	<input type="text" name="vendor[id]" hidden value="<?php echo $vendor->id; ?>" placeholder="Enter First name">
@@ -87,7 +81,3 @@ $address = $this->getAddress();
 	</tr>
 </form>
 </table>
-
-
-</body>
-</hrml>

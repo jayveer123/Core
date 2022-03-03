@@ -3,15 +3,9 @@
 $admin=$this->getAdmin(); 
 
 ?>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Crud With Class And Methos</title>
-</head>
-<body>
 
-<h3 align="center">* Insert Record *</h3>
+
+<h3 align="center">* Data Process For Admin *</h3>
 <table align="center">
 <form method="POST" action="<?php echo $this->getUrl('admin','save',['id'=>$admin->id],true) ?>">
 	<input type="text" name="admin[id]" hidden value="<?php echo $admin->id; ?>" placeholder="Enter First name">
@@ -42,12 +36,8 @@ $admin=$this->getAdmin();
 	</tr>
 
 	<tr>
-	<td><input type="submit" name="update" id="sub" value="Update"></td>
+	<td><input type="submit" name="update" id="sub" value="Save"></td>
 	<td><input type="reset" name="res" id="res" value="Reset"></td>
 	</tr>
 </form>
 </table>
-
-
-</body>
-</hrml>

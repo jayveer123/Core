@@ -5,21 +5,10 @@ $products=$this->getProducts();
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Product Data</title>
-</head>
-<body>
-	<form align="center">
-		<tr>
-			<td><button><a href="<?php echo $this->getUrl('product','add') ?>">Add New</a></button></td>
-		</tr>
-	</form>
-<table align="center" border="1">
+<h3 align="center">* Product Grid *</h3>
 
+<table align="center" border="1" width="100%">
+	<button><a href="<?php echo $this->getUrl('product','add') ?>">Add New</a></button>
 	<tr>
 		<th>Product Id</th>
 		<th>Product Name</th>

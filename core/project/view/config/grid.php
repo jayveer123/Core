@@ -3,17 +3,14 @@
 $configs = $this->getConfigs();
 
 ?>
-<html>
-<head>
-</head>
-<body>
-	<form align="center">
-		<tr>
-			<button><a href="<?php echo $this->getUrl('config','add') ?>">Add</a></button>
-		</tr>
-	</form>
+
+
+<h3 align="center">* Config Grid *</h3>
 	
 	<table border="1" width="100%" cellspacing="4">
+
+		<button><a href="<?php echo $this->getUrl('config','add') ?>">Add New</a></button>
+		
 		<tr>
 			<th>Config Id</th>
 			<th>Name</th>
@@ -44,5 +41,3 @@ $configs = $this->getConfigs();
 		<?php endif;  ?>
 		
 	</table>
-	
-</body>

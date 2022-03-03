@@ -139,8 +139,8 @@ class Model_Core_Row
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 2;
 	const STATUS_DEFAULT = 1;
-	const STATUS_ENABLED_LBL = 'Enabled';
-	const STATUS_DISABLED_LBL = 'Disabled';
+	const STATUS_ENABLED_LBL = '1';
+	const STATUS_DISABLED_LBL = '2';
 
 	public function getStatus($key = null)
 	{

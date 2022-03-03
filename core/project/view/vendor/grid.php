@@ -4,17 +4,11 @@ $vendors=$this->getVendors();
 $addressData = $this->getAddresses();
 
 ?>
-<html>
-<head>
-</head>
-<body>
-	<h3 align="center">Vendor</h3>
-	<form align="center">
-		<tr>
-			<td><button><a href="<?php echo $this->getUrl('vendor','add') ?>">Add New</a></button></td>
-		</tr>
-	</form>
+
+	<h3 align="center">* Vendor Grid *</h3>
+	
 	<table border="1" width="100%" cellspacing="4">
+		<button><a href="<?php echo $this->getUrl('vendor','add') ?>">Add New</a></button>
 		<tr>
 			<th>Id</th>
 			<th>First Name</th>
@@ -61,8 +55,6 @@ $addressData = $this->getAddresses();
 			<tr>
 			<?php } ?>
 		<?php }else{ ?>
-			<tr><td colspan="10">No Record Found</td></tr>
+			<tr><td colspan="15">No Record Found</td></tr>
 		<?php } ?>
 	</table>
-	
-</body>

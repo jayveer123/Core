@@ -3,17 +3,11 @@
 $pages = $this->getPages();
 
 ?>
-<html>
-<head>
-</head>
-<body>
-	<form align="center">
-		<tr>
-			<button><a href="<?php echo $this->getUrl('page','add') ?>">Add</a></button>
-		</tr>
-	</form>
+
+<h3 align="center">* Page Grid *</h3>
 	
 	<table border="1" width="100%" cellspacing="4">
+		<button><a href="<?php echo $this->getUrl('page','add') ?>">Add</a></button>
 		<tr>
 			<th>Page Id</th>
 			<th>Name</th>
@@ -44,5 +38,3 @@ $pages = $this->getPages();
 		<?php endif;  ?>
 		
 	</table>
-	
-</body>

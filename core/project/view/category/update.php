@@ -4,17 +4,13 @@
 $categoryData =  $this->getCategory();  
 $categories = $this->getCategories();
 
-?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Update Data</title>
-</head>
-<body>
+
+?>
+	
 <table align="center">
+
+	<h3 align="center">* Proceess Record With Category *</h3>
 		<form method="post" action="<?php echo $this->getUrl('category','save',['id'=>$categoryData->id],true) ?>">
 
 				<tr>
@@ -40,8 +36,8 @@ $categories = $this->getCategories();
 
 				<tr>
 				<td><label>Stetus :-</label></td>
-				<td><input type="radio" name="category[c_stetus]" value="1" <?php if($categoryData->c_stetus==1){echo "checked";} ?>>Active</td>
-				<td><input type="radio" name="category[c_stetus]" value="2" <?php if($categoryData->c_stetus==2){echo "checked";} ?>>DeActive</td>
+				<td><input type="radio" name="category[c_stetus]" value="1" <?php if($categoryData->getStatus($categoryData->c_stetus)==1){echo "checked";} ?>>Active</td>
+				<td><input type="radio" name="category[c_stetus]" value="2" <?php if($categoryData->getStatus($categoryData->c_stetus)==2){echo "checked";} ?>>DeActive</td>
 				</tr>
 
 				<tr>

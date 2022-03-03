@@ -6,7 +6,10 @@ class Controller_Product extends Controller_Core_Action{
 	
 	public function gridAction()
 	{
-		Ccc::getBlock('Product_Grid')->toHtml();
+		$content = $this->getLayout()->getContent();
+        $productGrid = Ccc::getBlock('Product_Grid');
+        $content->addChild($productGrid,'grid');
+        $this->randerLayout();
 	}
 
 	public function saveAction()
@@ -91,13 +94,21 @@ class Controller_Product extends Controller_Core_Action{
 			{
 				throw new Exception("System is unable to find record.", 1);
 			}
-			Ccc::getBlock('Product_Edit')->addData('product',$product)->toHtml();
+
+			$content = $this->getLayout()->getContent();
+	        $productEdit = Ccc::getBlock('Product_Edit')->addData('product',$product);
+	        $content->addChild($productEdit,'edit');
+	        $this->randerLayout();
 	}
 
 	public function addAction()
 	{	
-		$productModel = Ccc::getModel('Product');	
-		Ccc::getBlock('Product_Edit')->setData(['product'=>$productModel])->toHtml();
+		$productModel = Ccc::getModel('Product');
+
+		$content = $this->getLayout()->getContent();
+        $productAdd = Ccc::getBlock('Product_Edit')->setData(['product'=>$productModel]);
+        $content->addChild($productAdd,'add');
+        $this->randerLayout();
 	}
 
 	public function deleteAction()

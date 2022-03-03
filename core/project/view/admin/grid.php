@@ -1,18 +1,8 @@
-<?php
+<?php $admins=$this->getAdmins(); ?>
 
-$admins=$this->getAdmins();
-
-?>
-<html>
-<head>
-</head>
-<body>
-	<form align="center">
-		<tr>
-			<td><button><a href="<?php echo $this->getUrl('admin','add') ?>">Add New</a></button></td>
-		</tr>
-	</form>
+<h3 align="center">* Admin Grid *</h3>
 	<table border="1" width="100%" cellspacing="4">
+		<button><a href="<?php echo $this->getUrl('admin','add') ?>">Add New</a></button>
 		<tr>
 			<th>Id</th>
 			<th>First Name</th>
@@ -54,4 +44,3 @@ $admins=$this->getAdmins();
 		
 	</table>
 	
-</body>

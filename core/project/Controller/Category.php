@@ -6,7 +6,10 @@ class Controller_Category extends Controller_Core_Action{
 	
 	public function gridAction()
 	{
-		Ccc::getBlock('Category_Grid')->toHtml();
+		$content = $this->getLayout()->getContent();
+        $categoryGrid = Ccc::getBlock('Category_Grid');
+        $content->addChild($categoryGrid,'grid');
+        $this->randerLayout();
 	}
 
 
@@ -73,7 +76,7 @@ class Controller_Category extends Controller_Core_Action{
                         $categoryData->resetData();
                         $categoryData->path = $insertId;
                         $categoryData->id = $insertId;
-                        $result = $categoryModel->save();
+                        $result = $categoryModel->save(); 
                     }
                     else{
                         $insertId = $categoryModel->save();
@@ -91,9 +94,9 @@ class Controller_Category extends Controller_Core_Action{
                 }
                 
             }
-        
+            $this->redirect($this->getView()->getUrl('category','grid'));
 
-			$this->redirect($this->getView()->getUrl('category','grid'));
+			
 		}
 		catch(Exception $e){
 			echo "<pre>";
@@ -117,14 +120,22 @@ class Controller_Category extends Controller_Core_Action{
         if(!$category){
             throw new Exception("Invalid request", 1);
         }
-        Ccc::getBlock('Category_Edit')->addData('category',$category)->toHtml();
+
+        $content = $this->getLayout()->getContent();
+        $categoryEdit = Ccc::getBlock('Category_Edit')->addData('category',$category);
+        $content->addChild($categoryEdit,'edit');
+        $this->randerLayout();
 	}
 
 	public function addAction()
 	{
 		$categoryModel = Ccc::getModel('Category');
         $category = $categoryModel;
-        Ccc::getBlock('Category_Edit')->addData('category',$category)->toHtml();
+
+        $content = $this->getLayout()->getContent();
+        $categoryAdd = Ccc::getBlock('Category_Edit')->addData('category',$category);
+        $content->addChild($categoryAdd,'add');
+        $this->randerLayout();
 	}
 
 	public function deleteAction()
@@ -152,17 +163,6 @@ class Controller_Category extends Controller_Core_Action{
 			echo "<pre>";
 			print_r($e);
 		}
-	}
-
-	public function errorAction()
-	{
-		echo "error";
-	}
-
-	public function redirect($url)
-	{
-		header("location:$url");
-		exit();
 	}
 
 

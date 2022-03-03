@@ -5,7 +5,10 @@ class Controller_Category_Media extends Controller_Core_Action{
 
 	public function gridAction()
 	{
-		Ccc::getBlock('Category_Media_Grid')->toHtml();
+		$content = $this->getLayout()->getContent();
+        $categoryMediaGrid = Ccc::getBlock('Category_Media_Grid');
+        $content->addChild($categoryMediaGrid,'grid');
+        $this->randerLayout();
 	}
 	public function saveAction()
 	{
