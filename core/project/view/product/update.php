@@ -4,14 +4,8 @@ $product=$this->getProduct();
 
 
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Update Data</title>
-</head>
-<body>
+<h3 align="center">* Process Record With Product *</h3>
+
 <table align="center">
 		<form method="post" action="<?php echo $this->getUrl('product','save',['id'=>$product->id],true) ?>">
 			
@@ -43,5 +37,3 @@ $product=$this->getProduct();
 				</tr>
 		</form>
 		</table>
-</body>
-</html>

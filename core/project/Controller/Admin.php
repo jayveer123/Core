@@ -5,7 +5,10 @@ class Controller_Admin extends Controller_Core_Action{
 	
 	public function gridAction()
 	{
-		Ccc::getBlock('Admin_Grid')->toHtml();
+		$content = $this->getLayout()->getContent();
+		$adminGrid = Ccc::getBlock('Admin_Grid');
+		$content->addChild($adminGrid,'grid');
+		$this->randerLayout();
 	}
 
 	public function saveAction()
@@ -71,13 +74,18 @@ class Controller_Admin extends Controller_Core_Action{
 			print_r($e);
 		}
 
+
 		$this->redirect($this->getView()->getUrl('admin','grid',[],true));
 	}
 	public function addAction()
 	{
 		$adminModel = Ccc::getModel('Admin');
 		$admin = $adminModel;
-		Ccc::getBlock('Admin_Edit')->setData(['admin'=>$admin])->toHtml();
+
+		$content = $this->getLayout()->getContent();
+		$adminAdd = Ccc::getBlock('Admin_Edit')->setData(['admin'=>$admin]);
+		$content->addChild($adminAdd,'add');
+		$this->randerLayout();
 	}
 
 	public function editAction()
@@ -97,7 +105,11 @@ class Controller_Admin extends Controller_Core_Action{
 			{
 				throw new Exception("System is unable to find record.", 1);
 			}
-			Ccc::getBlock('Admin_Edit')->addData('admin',$adminData)->toHtml();
+
+			$content = $this->getLayout()->getContent();
+			$adminEdit = Ccc::getBlock('Admin_Edit')->setData(['admin'=>$adminData]);
+			$content->addChild($adminEdit,'edit');
+			$this->randerLayout();
 	}
 	public function deleteAction()
 	{
@@ -122,12 +134,13 @@ class Controller_Admin extends Controller_Core_Action{
 			{
 				throw new Exception("Unable to Delet Record.", 1);
 			}
-		    $this->redirect($this->getView()->getUrl('admin','grid',[],true));
+		    
 		}
 		catch(Exception $e){
 			echo "<pre>";
 			print_r($e);
 		}
+		$this->redirect($this->getView()->getUrl('admin','grid',[],true));
 		
 	}
 

@@ -7,21 +7,10 @@ $addressData = $this->getAddresses();
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Customers Data</title>
-</head>
-<body>
-	<form align="center">
-		<tr>
-			<td><button><a href="<?php echo $this->getUrl('customer','add') ?>">Add New</a></button></td>
-		</tr>
-	</form>
+<h3 align="center">* Customer Grid *</h3>
+	
 <table align="center" border="1" width="100%">
-
+	<button><a href="<?php echo $this->getUrl('customer','add') ?>">Add New</a></button>
 	<tr>
 		<th>Customer Id</th>
 		<th>First Name</th>

@@ -5,22 +5,9 @@ $categories = $this->getCategories();
 
 
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Category Data</title>
-</head>
-<body>
-	<form align="center">
-		<tr>
-			<td><button><a href="<?php echo $this->getUrl('category','add',[],true) ?>">Add New</a></button></td>
-		</tr>
-	</form>
+<h3 align="center">Catgory Grid</h3>
 <table align="center" border="1" width="100%">
-
+	<button><a href="<?php echo $this->getUrl('category','add',[],true) ?>">Add New</a></button>
 	<tr>
 		<th>Category Id</th>
 		<th>Category Name</th>
@@ -74,5 +61,4 @@ $categories = $this->getCategories();
 	}
 	?>
 </table>
-</body>
-</html>
+

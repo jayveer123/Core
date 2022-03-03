@@ -1,14 +1,10 @@
 <?php $config=$this->getConfig();  ?>
 
-<html>
-<head><title>Config Edit</title></head>
-<body>
+<h3 align="center">* Proceess Record With Config *</h3>
 
 <form action="<?php echo $this->getUrl('config','save',['id'=>$config->id],true) ?>" method="POST">
-	<table border="1" width="100%" cellspacing="4">
-		<tr>
-			<td colspan="2"><b>Config Information</b></td>
-		</tr>
+	<table align="center">
+		
 		<tr>
 			<td width="10%">Name<input type="text" name="config[id]" value="<?php echo $config->id ?>" hidden></td>
 			<td><input type="text" name="config[name]" value="<?php echo $config->name ?>"></td>
@@ -22,15 +18,13 @@
 			<td width="10%">Value</td>
 			<td><input type="text" name="config[value]" value="<?php echo $config->value ?>"></td>
 		</tr>
+
 		<tr>
-			<td width="10%">Status</td>
-			<td>
-				<select name="config[status]">
-					<option value="1" <?php echo ($config->getStatus($config->status)=='Active')?'selected':'' ?>>Active</option>
-					<option value="2" <?php echo ($config->getStatus($config->status)=='Inactive')?'selected':'' ?>>Inactive</option>
-				</select>
-			</td>
-		</tr>
+				<td><label>Stetus :-</label></td>
+				<td><input type="radio" name="config[status]" value="1" <?php if($config->getStatus($config->status)==1){echo "checked";} ?>>Active</td>
+				<td><input type="radio" name="config[status]" value="2" <?php if($config->getStatus($config->status)==2){echo "checked";} ?>>DeActive</td>
+				</tr>
+
 		<tr>
 			<td width="10%">&nbsp;</td>
 			<td>
@@ -41,5 +35,3 @@
 		
 	</table>	
 </form>
-</body>
-</html>

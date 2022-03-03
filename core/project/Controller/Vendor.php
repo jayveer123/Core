@@ -5,13 +5,20 @@ class Controller_Vendor extends Controller_Core_Action{
 	
 	public function gridAction()
 	{
-		Ccc::getBlock('Vendor_Grid')->toHtml();
+		$content = $this->getLayout()->getContent();
+        $vendorGrid = Ccc::getBlock('Vendor_Grid');
+        $content->addChild($vendorGrid,'grid');
+        $this->randerLayout();
 	}
 	public function addAction()
 	{
 		$vendorModel = Ccc::getModel('Vendor');
 		$vendor = $vendorModel;
-		Ccc::getBlock('Vendor_Edit')->setData(['vendor'=>$vendor])->toHtml();
+
+		$content = $this->getLayout()->getContent();
+        $vendorAdd = Ccc::getBlock('Vendor_Edit')->setData(['vendor'=>$vendor]);
+        $content->addChild($vendorAdd,'add');
+        $this->randerLayout();
 	}
 
 	public function editAction()
@@ -36,7 +43,11 @@ class Controller_Vendor extends Controller_Core_Action{
 		{
 			$address = ['vendor_id' => $customer['vendor_id']];	
 		}
-		Ccc::getBlock('Vendor_Edit')->addData('vendor',$vendor)->addData('address',$address)->toHtml();
+
+		$content = $this->getLayout()->getContent();
+        $vendorEdit = Ccc::getBlock('Vendor_Edit')->addData('vendor',$vendor)->addData('address',$address);
+        $content->addChild($vendorEdit,'edit');
+        $this->randerLayout();
 	}
 	public function deleteAction()
 	{

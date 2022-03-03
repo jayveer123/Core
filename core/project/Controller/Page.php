@@ -5,7 +5,10 @@ class Controller_Page extends Controller_Core_Action{
 	
 	public function gridAction()
 	{
-		Ccc::getBlock('Page_Grid')->toHtml();
+		$content = $this->getLayout()->getContent();
+        $pageGrid = Ccc::getBlock('Page_Grid');
+        $content->addChild($pageGrid,'grid');
+        $this->randerLayout();
 	}
 
 	public function saveAction()
@@ -77,7 +80,11 @@ class Controller_Page extends Controller_Core_Action{
 	{
 		$pageModel = Ccc::getModel('Page');
 		$page = $pageModel;
-		Ccc::getBlock('Page_Edit')->setData(['page'=>$page])->toHtml();
+
+		$content = $this->getLayout()->getContent();
+        $pageAdd = Ccc::getBlock('Page_Edit')->setData(['page'=>$page]);
+        $content->addChild($pageAdd,'add');
+        $this->randerLayout();
 	}
 
 	public function editAction()
@@ -97,7 +104,11 @@ class Controller_Page extends Controller_Core_Action{
 			{
 				throw new Exception("System is unable to find record.", 1);
 			}
-			Ccc::getBlock('Page_Edit')->addData('page',$pageData)->toHtml();
+
+			$content = $this->getLayout()->getContent();
+	        $pageEdit = Ccc::getBlock('Page_Edit')->addData('page',$pageData);
+	        $content->addChild($pageEdit,'edit');
+	        $this->randerLayout();
 	}
 	public function deleteAction()
 	{

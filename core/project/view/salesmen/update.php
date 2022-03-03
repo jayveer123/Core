@@ -3,15 +3,9 @@
 $salesmen=$this->getSalesmen(); 
 
 ?>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Crud With Class And Methos</title>
-</head>
-<body>
 
-<h3 align="center">* Insert Record *</h3>
+
+<h3 align="center">* Process Record With Salesman *</h3>
 <table align="center">
 <form method="POST" action="<?php echo $this->getUrl('salesmen','save',['id'=>$salesmen->id],true) ?>">
 	<input type="text" name="salesmen[id]" hidden value="<?php echo $salesmen->id; ?>" placeholder="Enter First name">
@@ -47,7 +41,3 @@ $salesmen=$this->getSalesmen();
 	</tr>
 </form>
 </table>
-
-
-</body>
-</hrml>

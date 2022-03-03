@@ -6,18 +6,7 @@
 	<title>Menu</title>
 </head>
 <body>
-<table border="1" align="center">
-	<tr>
-		<td><a href="index.php?c=admin&a=grid">Admin</a></td>
-		<td><a href="index.php?c=product&a=grid">Product</a></td>
-		<td><a href="index.php?c=customer&a=grid">Customer</a></td>
-		<td><a href="index.php?c=category&a=grid">Category</a></td>
-		<td><a href="index.php?c=config&a=grid">Config</a></td>
-		<td><a href="index.php?c=page&a=grid">Page</a></td>
-		<td><a href="index.php?c=salesmen&a=grid">Salesmen</a></td>
-		<td><a href="index.php?c=vendor&a=grid">Vendor</a></td>
-	</tr>
-</table>
+
 </body>
 </html>
 
