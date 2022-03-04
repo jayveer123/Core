@@ -23,14 +23,14 @@ class Controller_Page extends Controller_Core_Action{
 
 			if(!$request->getPost('page'))
 			{
-				throw new Exception("Invalid Request", 1);
+				$this->getMessage()->addMessage('Invalid Request',3);
 			}	
 
 			$postData = $request->getPost('page');
 
 			if(!$postData)
 			{
-				throw new Exception("Invalid data posted.", 1);	
+				$this->getMessage()->addMessage('Data Not Found',3);
 			}
 			$page = $pageModel;
 			$page->setdata($postData);
@@ -46,15 +46,16 @@ class Controller_Page extends Controller_Core_Action{
 				
 				if(!$insert)
 				{
-					throw new Exception("System is unable to Insert.", 1);
+					$this->getMessage()->addMessage('Data Not Inserted',3);
 				}
+				$this->getMessage()->addMessage('Data Inserted',1);
 
 			}
 			else{
 				
 				if(!(int)$postData['id'])
 				{
-					throw new Exception("Invalid Request.", 1);
+					$this->getMessage()->addMessage('Id Not Found',3);
 				}
 				$page->id = $postData["id"];
 
@@ -65,8 +66,9 @@ class Controller_Page extends Controller_Core_Action{
 
 				if(!$update)
 				{
-					throw new Exception("System is unable to Update.", 1);
-				}	
+					$this->getMessage()->addMessage('Unable To Update',3);
+				}
+				$this->getMessage()->addMessage('Data Updated',1);	
 			}
 		}
 		catch(Exception $e){
@@ -96,13 +98,12 @@ class Controller_Page extends Controller_Core_Action{
 			$id = (int)$request->getRequest('id');
 			if(!$id)
 			{
-				throw new Exception("Id Not Found", 1);
-				
+				$this->getMessage()->addMessage('Id Not Found',3);
 			}
 			$pageData = $page->load($id);
 			if(!$pageData)
 			{
-				throw new Exception("System is unable to find record.", 1);
+				$this->getMessage()->addMessage('Data Not Found',3);
 			}
 
 			$content = $this->getLayout()->getContent();
@@ -117,22 +118,24 @@ class Controller_Page extends Controller_Core_Action{
 			$request = $this->getRequest();
 			if(!$request->getRequest('id'))
 			{
-				throw new Exception("Invalid Request.", 1);
+				$this->getMessage()->addMessage('Invalid Request',3);
 			}
 
 			$pageId = $request->getRequest('id');
 
 			if(!$pageId)
 			{
-				throw new Exception("Unable to fetch ID.", 1);
+				$this->getMessage()->addMessage('Id Not Found',3);
 			}
 			$page = $pageModel;
 
 			$result = $page->load($pageId)->delete();
 			if(!$result)
 			{
-				throw new Exception("Unable to Delet Record.", 1);
+				$this->getMessage()->addMessage('Data Not Delted',3);
 			}
+
+			$this->getMessage()->addMessage('Data Deleted Successfully',1);
 		    $this->redirect($this->getView()->getUrl('page','grid',[],true));
 		}
 		catch(Exception $e){

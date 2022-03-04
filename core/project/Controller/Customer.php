@@ -20,12 +20,12 @@ class Controller_Customer extends Controller_Core_Action{
 		$request = $this->getRequest();
 		if(!$request->getPost('customer'))
 		{
-			throw new Exception("Invalid Request", 1);
+			$this->getMessage()->addMessage('Invelid Request',3);
 		}	
 		$postData = $request->getPost('customer');
 		if(!$postData)
 		{
-			throw new Exception("Invalid data posted.", 1);	
+			$this->getMessage()->addMessage('Invalid Data Posted',3);
 		}
 		$customer = $customerModel;
 		$customer->setData($postData);
@@ -37,18 +37,21 @@ class Controller_Customer extends Controller_Core_Action{
 			$insert = $customer->save();
 			if($insert==null)
 			{
-				throw new Exception("System is unable to Insert.", 1);
+				$this->getMessage()->addMessage('Data Not Inserted',3);
 			}
+			$this->getMessage()->addMessage('Customer Add Succsesfully',1);
 			return $insert;
 		}
 		else
 		{
 			if(!(int)$customer->id)
 			{
-				throw new Exception("Invalid Request.", 1);
+				$this->getMessage()->addMessage('Id Not Found',3);
 			}
 			$customer->updatedDate = date('y-m-d h:i:s');
 			$update = $customer->save();
+
+			$this->getMessage()->addMessage('Customer Update Succsesfully',1);
 		}	 
 	}
 	protected function saveAddress($customerId)
@@ -57,12 +60,12 @@ class Controller_Customer extends Controller_Core_Action{
 		$request = $this->getRequest();
 		if(!$request->getPost('address'))
 		{
-			throw new Exception("Invalid Request", 1);
+			$this->getMessage()->addMessage('Invalid Request',3);
 		}	
 		$postData = $request->getPost('address');
 		if(!$postData)
 		{
-			throw new Exception("Invalid data posted.", 1);	
+			$this->getMessage()->addMessage('Data Not Found',3);
 		}
 		$address = $addressModel;
 		$address->setData($postData);
@@ -74,7 +77,7 @@ class Controller_Customer extends Controller_Core_Action{
 			$insert = $address->save();
 			if(!$insert)
 			{
-				throw new Exception("System is unable to Insert.", 1);
+				$this->getMessage()->addMessage('address Not Inserted',3);
 			}
 		}
 		else
@@ -84,8 +87,9 @@ class Controller_Customer extends Controller_Core_Action{
 			$update = $address->save();
 			if(!$update)
 			{
-				throw new Exception("System is unable to Update.", 1);
+				$this->getMessage()->addMessage('address Not Updated',3);;
 			}
+			$this->getMessage()->addMessage('Address Updated Successfully',1);
 		}
 	}
 	public function saveAction()
@@ -119,14 +123,14 @@ class Controller_Customer extends Controller_Core_Action{
 		$id = (int)$request->getRequest('id');
 		if(!$id)
 		{
-			throw new Exception("Invalid Request", 1);
+			$this->getMessage()->addMessage('Id Not Found',3);
 		}
 		
 		$customer=$customerModel->load($id);
 		
 		if(!$customer)
 		{	
-			throw new Exception("System is unable to find record.", 1);	
+			$this->getMessage()->addMessage('Unable To find record',3);
 		}
 		$addressModel = Ccc::getModel('Customer_Address');
 		$address = $addressModel->load($id,'customer_id');
@@ -160,22 +164,23 @@ class Controller_Customer extends Controller_Core_Action{
 			$request = $this->getRequest();
 			if(!$request->getRequest('id'))
 			{
-				throw new Exception("Invalid Request.", 1);
+				$this->getMessage()->addMessage('Invalid Request',3);
 			}
 
 			$customerId = $request->getRequest('id');
 
 			if(!$customerId)
 			{
-				throw new Exception("Unable to fetch ID.", 1);
+				$this->getMessage()->addMessage('Id Not Found',3);
 			}
 			$customer = $customerModel;
 
 			$result = $customer->load($customerId)->delete();
 			if(!$result)
 			{
-				throw new Exception("Unable to Delet Record.", 1);
+				$this->getMessage()->addMessage('Data Not Delted',3);
 			}
+			$this->getMessage()->addMessage('Data Deleted Successfully',1);
 		    $this->redirect($this->getView()->getUrl('customer','grid',[],true));
 		}
 		catch(Exception $e){
