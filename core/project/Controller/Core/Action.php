@@ -3,7 +3,9 @@ Ccc::loadClass('Model_Core_View');
 class Controller_Core_Action{
 
     protected $layout = null;
+    protected $message = null;
     public $view = null;
+
     public function getLayout()
     {
         if(!$this->layout){
@@ -11,8 +13,6 @@ class Controller_Core_Action{
         }
         return $this->layout;
     }
-    
-
     public function setLayout($layout)
     {
         $this->layout = $layout;
@@ -52,6 +52,19 @@ class Controller_Core_Action{
             $this->setView(new Model_Core_View());
         }
         return $this->view;
+    }
+
+    public function getMessage()
+    {
+        if(!$this->message){
+            $this->setMessage(Ccc::getModel('Core_Message'));
+        }
+        return $this->message;
+    }
+    public function setMessage($message)
+    {
+        $this->message = $message;
+        return $this;
     }
 }
 

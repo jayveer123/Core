@@ -23,14 +23,14 @@ class Controller_Admin extends Controller_Core_Action{
 
 			if(!$request->getPost('admin'))
 			{
-				throw new Exception("Invalid Request", 1);
+				$this->getMessage()->addMessage('Invalid Request',3);
 			}	
 
 			$postData = $request->getPost('admin');
 
 			if(!$postData)
 			{
-				throw new Exception("Invalid data posted.", 1);	
+				$this->getMessage()->addMessage('Invalid Request For Data',3);
 			}
 			$admin = $adminModel;
 			$admin->setdata($postData);
@@ -46,15 +46,15 @@ class Controller_Admin extends Controller_Core_Action{
 				
 				if(!$insert)
 				{
-					throw new Exception("System is unable to Insert.", 1);
+					$this->getMessage()->addMessage('Admin Data Not Inserted',3);
 				}
-
+				$this->getMessage()->addMessage('Admin Data save succesfully',1);
 			}
 			else{
 				
 				if(!(int)$postData['id'])
 				{
-					throw new Exception("Invalid Request.", 1);
+					$this->getMessage()->addMessage('Id Not Found',3);
 				}
 				$admin->id = $postData["id"];
 
@@ -65,8 +65,9 @@ class Controller_Admin extends Controller_Core_Action{
 
 				if(!$update)
 				{
-					throw new Exception("System is unable to Update.", 1);
-				}	
+					throw new Exception("Admin Data Not Updated", 3);
+				}
+				$this->getMessage()->addMessage('Admin Data updated succesfully',1);
 			}
 		}
 		catch(Exception $e){
@@ -97,13 +98,12 @@ class Controller_Admin extends Controller_Core_Action{
 			$id = (int)$request->getRequest('id');
 			if(!$id)
 			{
-				throw new Exception("Id Not Found", 1);
-				
+				$this->getMessage()->addMessage('Id Not Found',3);
 			}
 			$adminData = $admin->load($id);
 			if(!$adminData)
 			{
-				throw new Exception("System is unable to find record.", 1);
+				$this->getMessage()->addMessage('Admin Data Cant Find',3);
 			}
 
 			$content = $this->getLayout()->getContent();
@@ -118,22 +118,23 @@ class Controller_Admin extends Controller_Core_Action{
 			$request = $this->getRequest();
 			if(!$request->getRequest('id'))
 			{
-				throw new Exception("Invalid Request.", 1);
+				$this->getMessage()->addMessage('Invalid Request',3);
 			}
 
 			$adminId = $request->getRequest('id');
 
 			if(!$adminId)
 			{
-				throw new Exception("Unable to fetch ID.", 1);
+				$this->getMessage()->addMessage('Admin Id Not Found',3);
 			}
 			$admin = $adminModel;
 
 			$result = $admin->load($adminId)->delete();
 			if(!$result)
 			{
-				throw new Exception("Unable to Delet Record.", 1);
+				throw new Exception("Unable to Delet Record.", 3);
 			}
+			$this->getMessage()->addMessage('Admin Data Delted Sucess',1);
 		    
 		}
 		catch(Exception $e){

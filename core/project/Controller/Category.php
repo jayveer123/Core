@@ -36,7 +36,7 @@ class Controller_Category extends Controller_Core_Action{
                     }
                     $result = $categoryModel->save();
                     if(!$result){
-                        throw new Exception("Sysetm is unable to save your data", 1);   
+                        $this->getMessage()->addMessage('Category Data Not Saved',3);
                     }
                     
                     $allPath = $categoryModel->fetchAll("SELECT * FROM `category` WHERE `path` LIKE '%$id%' ");
@@ -60,6 +60,7 @@ class Controller_Category extends Controller_Core_Action{
                         }
                         $result = $path->save();
                     }
+                    $this->getMessage()->addMessage('Category Data Updated Successfully',1);
                 }
                 else{
                     $categoryData->createdDate = date('y-m-d h:m:s');
@@ -71,7 +72,7 @@ class Controller_Category extends Controller_Core_Action{
 
                         
                         if(!$insertId){
-                            throw new Exception("system is unabel to insert your data", 1);
+                            $this->getMessage()->addMessage('Category Data Not Inserted',3);
                         }
                         $categoryData->resetData();
                         $categoryData->path = $insertId;
@@ -81,7 +82,7 @@ class Controller_Category extends Controller_Core_Action{
                     else{
                         $insertId = $categoryModel->save();
                         if(!$insertId){
-                            throw new Exception("system is unabel to insert your data", 1);
+                            $this->getMessage()->addMessage('Category Data Not Inserted',3);
                         }
                         $categoryData->id = $insertId;
                         $parentPath = $categoryModel->load($categoryData->parent_id);
@@ -89,9 +90,11 @@ class Controller_Category extends Controller_Core_Action{
                         $result = $categoryData->save();
                     }
                     if(!$result){
-                        throw new Exception("Sysetm is unable to save your data", 1);   
+                        $this->getMessage()->addMessage('Category Data Not Inserted',3);   
                     }
+                    $this->getMessage()->addMessage('Category Data Saved Successfully',1);
                 }
+
                 
             }
             $this->redirect($this->getView()->getUrl('category','grid'));
@@ -111,14 +114,14 @@ class Controller_Category extends Controller_Core_Action{
         $request = $this->getRequest();
         $id = $request->getRequest('id');
         if(!$id){
-            throw new Exception("Invalid request", 1);
+            $this->getMessage()->addMessage('Category Id Not Found',3);
         }
         if(!(int)$id){
-            throw new Exception("Invalid request", 1);
+            $this->getMessage()->addMessage('Category Id Is Not Integer',3);
         }
         $category = $categoryModel->load($id);
         if(!$category){
-            throw new Exception("Invalid request", 1);
+            $this->getMessage()->addMessage('Category Data Cant load',3);
         }
 
         $content = $this->getLayout()->getContent();
@@ -144,7 +147,7 @@ class Controller_Category extends Controller_Core_Action{
 			$categoryModel = Ccc::getModel('Category');
             $request = $this->getRequest();
             if(!$request->getRequest('id')){
-                throw new Exception("Invalid Request", 1);
+                $this->getMessage()->addMessage('Invalid request',3);
             }
             $id = $request->getRequest('id');
 
@@ -155,8 +158,10 @@ class Controller_Category extends Controller_Core_Action{
 
             $result = $categoryModel->load($id)->delete();
             if(!$result){
-                throw new Exception("System is unable to delete data.", 1);
+                $this->getMessage()->addMessage('Category Data Not Deleted',3);
             }
+            $this->getMessage()->addMessage('Category Data Deleted Successfully',1);
+
             $this->redirect($this->getView()->getUrl('category','grid',[],true));
 		}
 		catch(Exception $e){

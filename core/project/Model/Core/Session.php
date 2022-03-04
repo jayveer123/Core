@@ -1,53 +1,90 @@
 <?php 
 
-class Model_Core_Session {
 
-	public function start()
-	{
-		return session_start();
-	}
-	public function destroy()
-	{
-		return session_destroy();
-	}
-	public function getId()
-	{
-		return session_id();
-	}
-	public function start()
-	{
-		return session_start();
-	}
-	public function regenrateId()
+class Model_Core_Session
+{
+    public function __construct()
     {
-        return session_regenerate_id();
+        if(!$this->isStarted())
+        {
+            session_start();
+        }
     }
-    public function __set($key, $value)
+    public function start()
     {
-        $this->start();
-        $_SESSION[$key] = $value;
+        if(!$this->isStarted())
+        {
+            session_start();
+        }
         return $this;
     }
 
-    public function __get($key)
+    public function isStarted()
     {
-        $this->start();
-        if (!array_key_exists($key, $_SESSION)) 
+        if($this->getId())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function getId()
+    {
+        return session_id();
+    }
+
+    public function regenerateId()
+    {
+        if(!$this->isStarted())
+        {
+            session_start();
+        }
+        return session_regenerate_id();
+    }
+
+    public function destroy()
+    {
+        if(!$this->isStarted())
+        {
+            session_start();
+        }
+        session_destroy();
+    }
+
+    public function __set($messages, $Message)
+    {
+        if(!$this->isStarted())
+        {
+            $this->start();
+        }
+        $_SESSION[$messages] = $Message;
+        return $this;
+    }
+
+    public function __get($messages)
+    {
+        if(!$this->isStarted())
+        {
+            $this->start();
+        }
+        if(!array_key_exists($messages,$_SESSION)) 
         {
             return null;
         }
-        return $_SESSION[$key];
+        return $_SESSION[$messages];    
     }
 
-    public function __unset($key)
+    public function __unset($messages)
     {
-        if(array_key_exists($key, $_SESSION))
+        if(!$this->isStarted())
         {
-            unset($_SESSION[$key]);
+            $this->start();
+        }
+        if(array_key_exists($messages,$_SESSION))
+        {
+            unset($_SESSION[$messages]);
         }
         return $this;
     }
 
 }
-
-?>
