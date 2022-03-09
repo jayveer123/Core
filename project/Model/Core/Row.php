@@ -79,8 +79,9 @@ class Model_Core_Row
 		else
 		{
 			$result = $this->getTable()->insert($this->data);
+			$this->setData([$column=>$result]);
 		}
-		return $result;
+		return $this;
 	}
 
 	public function delete()
