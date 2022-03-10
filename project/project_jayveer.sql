@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 09, 2022 at 09:25 AM
+-- Generation Time: Mar 10, 2022 at 10:37 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.15
 
@@ -32,7 +32,7 @@ CREATE TABLE `admin` (
   `firstName` varchar(100) NOT NULL,
   `lastName` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `stetus` tinyint(1) NOT NULL DEFAULT 1,
   `createdDate` datetime NOT NULL,
   `updatedDate` datetime NOT NULL
@@ -43,8 +43,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `firstName`, `lastName`, `email`, `password`, `stetus`, `createdDate`, `updatedDate`) VALUES
-(17, 'ee', 'eeaaa', 'jay@g.com', 'jay959417', 1, '2022-03-04 12:03:28', '2022-03-09 13:03:36'),
-(19, 'a', 'a', 'jay@g.com', 'jay959417', 2, '2022-03-09 13:03:03', '2022-03-09 13:03:37');
+(22, 'Admin', 'Admin', 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', 1, '2022-03-10 15:03:49', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -70,9 +69,7 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `parent_id`, `c_name`, `c_stetus`, `path`, `base`, `thumb`, `small`, `createdDate`, `updatedDate`) VALUES
-(227, NULL, 'Bedroom', 2, '227', 17, NULL, NULL, '2022-03-07 05:03:30', '2022-03-09 07:03:41'),
-(228, 227, 'Bed', 1, '227/228', NULL, NULL, NULL, '2022-03-07 05:03:37', NULL),
-(229, 227, 'Table', 1, '227/229', NULL, NULL, NULL, '2022-03-07 05:03:48', NULL);
+(252, NULL, 'aaa', 1, '252', NULL, NULL, NULL, '2022-03-09 03:03:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -87,14 +84,6 @@ CREATE TABLE `category_media` (
   `gallery` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `category_media`
---
-
-INSERT INTO `category_media` (`imageId`, `categoryId`, `imageName`, `gallery`) VALUES
-(16, 227, 'Screenshot_(3)20220308010144.png', 1),
-(17, 227, 'Screenshot_(2)20220308053732.png', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -106,13 +95,6 @@ CREATE TABLE `category_product` (
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `category_product`
---
-
-INSERT INTO `category_product` (`entity_id`, `product_id`, `category_id`) VALUES
-(36, 110, 228);
 
 -- --------------------------------------------------------
 
@@ -135,7 +117,7 @@ CREATE TABLE `config` (
 --
 
 INSERT INTO `config` (`id`, `name`, `code`, `value`, `status`, `createdDate`, `updatedDate`) VALUES
-(3, 'w', 'w', 'w', 2, '2022-03-09 11:03:03', '2022-03-09 11:03:52');
+(6, 'w', 'w', 'w', 1, '2022-03-10 11:03:30', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -155,6 +137,13 @@ CREATE TABLE `customer` (
   `updatedDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`id`, `salesmen_id`, `firstName`, `lastName`, `email`, `mobile`, `stetus`, `createdDate`, `updatedDate`) VALUES
+(108, 12, 'a', 'a', 'a@g.coma', 123456, 1, '2022-03-09 02:03:17', '2022-03-10 12:13:10');
+
 -- --------------------------------------------------------
 
 --
@@ -172,6 +161,13 @@ CREATE TABLE `customer_address` (
   `billing` tinyint(1) NOT NULL DEFAULT 0,
   `shipping` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customer_address`
+--
+
+INSERT INTO `customer_address` (`address_id`, `customer_id`, `address`, `postal_code`, `city`, `state`, `country`, `billing`, `shipping`) VALUES
+(24, 108, 'fddd', NULL, NULL, NULL, NULL, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -191,8 +187,8 @@ CREATE TABLE `customer_price` (
 --
 
 INSERT INTO `customer_price` (`id`, `customer_id`, `product_id`, `discount`) VALUES
-(5, 85, 108, 5),
-(9, 84, 108, 10);
+(153, 108, 134, 4750),
+(154, 108, 135, 190);
 
 -- --------------------------------------------------------
 
@@ -237,7 +233,9 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `p_name`, `p_price`, `msp`, `cost_price`, `sku`, `p_qun`, `p_stetus`, `base`, `small`, `thumb`, `createdDate`, `updatedDate`) VALUES
-(110, 'abc', 5000, 2000, 100, 'AB001', 5, 1, NULL, NULL, NULL, '2022-03-09 13:03:17', '2022-03-09 13:03:04');
+(134, 'AAA', 5000, 4500, 300, 'AB001', 5, 1, NULL, NULL, NULL, '2022-03-09 23:03:32', NULL),
+(135, 'QQQ', 200, 150, 100, 'SS002', 8, 1, NULL, NULL, NULL, '2022-03-09 23:03:19', NULL),
+(136, 'd', 800, 500, 100, '20SS0', 50, 1, NULL, NULL, NULL, '2022-03-09 23:03:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -269,6 +267,13 @@ CREATE TABLE `salesmen` (
   `createdDate` datetime NOT NULL,
   `updatedDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `salesmen`
+--
+
+INSERT INTO `salesmen` (`id`, `firstName`, `lastName`, `email`, `mobile`, `status`, `margin`, `createdDate`, `updatedDate`) VALUES
+(12, 'a', 'a', 'a@g.com', 123456789, 1, 5.00, '2022-03-09 14:03:36', '2022-03-09 22:03:02');
 
 -- --------------------------------------------------------
 
@@ -364,7 +369,9 @@ ALTER TABLE `customer_address`
 -- Indexes for table `customer_price`
 --
 ALTER TABLE `customer_price`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `customer_id` (`customer_id`);
 
 --
 -- Indexes for table `page`
@@ -415,13 +422,13 @@ ALTER TABLE `vendor_address`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=255;
 
 --
 -- AUTO_INCREMENT for table `category_media`
@@ -433,31 +440,31 @@ ALTER TABLE `category_media`
 -- AUTO_INCREMENT for table `category_product`
 --
 ALTER TABLE `category_product`
-  MODIFY `entity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `entity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `config`
 --
 ALTER TABLE `config`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `customer_address`
 --
 ALTER TABLE `customer_address`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `customer_price`
 --
 ALTER TABLE `customer_price`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- AUTO_INCREMENT for table `page`
@@ -469,7 +476,7 @@ ALTER TABLE `page`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `product_media`
@@ -481,7 +488,7 @@ ALTER TABLE `product_media`
 -- AUTO_INCREMENT for table `salesmen`
 --
 ALTER TABLE `salesmen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `vendor`
@@ -532,6 +539,13 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `customer_address`
   ADD CONSTRAINT `customer_address_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `customer_price`
+--
+ALTER TABLE `customer_price`
+  ADD CONSTRAINT `customer_price_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `customer_price_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `product`

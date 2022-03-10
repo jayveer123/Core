@@ -26,7 +26,7 @@ class Controller_Admin_Login extends Controller_Admin_Action{
 				throw new Exception("invalid request", 1);
 			}
 			$loginData = $request->getPost('admin');
-			$password = $loginData['password'];
+			$password = md5($loginData['password']);
 			$row = $adminModel->fetchAll("SELECT * FROM `admin` WHERE `email` = '{$loginData['email']}' AND `password` = '{$password}'");
 
 			if(!$row){

@@ -60,6 +60,7 @@ class Controller_Admin extends Controller_Admin_Action{
 				date_default_timezone_set("Asia/Kolkata");
 				$admin->updatedDate  = date('Y-m-d H:m:s');	
 			}
+			$admin->password = md5($postData['password']);
 			$result=$admin->save();
 			
 			if(!$result)
