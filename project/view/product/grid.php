@@ -44,15 +44,15 @@ $products=$this->getProducts();
 			<td><?php echo $product->getStatus($product->p_stetus) ?></td>
 
 			<td>
-				<img src="<?php echo "Media/Product/".$this->getMedia($product->base)['imageName']  ?>" alt="No Image Found" width="50" height="50">
+				<img src="<?php echo "Media/Product/".$product->getBase()->imageName;  ?>" alt="No Image Found" width="50" height="50">
 			</td>
 
 			<td>
-				<img src="<?php echo "Media/Product/".$this->getMedia($product->thumb)['imageName']  ?>" alt="No Image Found" width="50" height="50">
+				<img src="<?php echo "Media/Product/".$product->getThumb()->imageName;  ?>" alt="No Image Found" width="50" height="50">
 			</td>
 
 			<td>
-				<img src="<?php echo "Media/Product/".$this->getMedia($product->small)['imageName']  ?>" alt="No Image Found" width="50" height="50">
+				<img src="<?php echo "Media/Product/".$product->getSmall()->imageName;  ?>" alt="No Image Found" width="50" height="50">
 			</td>
 
 			<td><?php echo $product->createdDate; ?></td>

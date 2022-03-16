@@ -133,7 +133,7 @@ class Controller_Product extends Controller_Admin_Action{
 			
 			$datas = $productModel->fetchAll("SELECT imageName FROM product_media WHERE  productId='$productId'");
 			foreach ($datas as $data) {
-				unlink($this->getView()->getBaseUrl("Media/Product/"). $data->imageName);
+				unlink(Ccc::getBlock('Product_Media_Grid')->getBaseUrl("Media/Product/"). $data->imageName);
 			}
 
 			$result = $productModel->load($productId);

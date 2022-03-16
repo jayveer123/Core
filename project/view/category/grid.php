@@ -35,15 +35,15 @@ $categories = $this->getCategories();
 
 			<td>
 
-				<img src="<?php if($category->base){echo "Media/Category/".$this->getMedia($category->base)['imageName']; }  ?>" alt="No Image Found" width="50" height="50">
+				<img src="<?php if($category->base){echo "Media/Category/".$category->getBase()->imageName;  }  ?>" alt="No Image Found" width="50" height="50">
 			</td>
 
 			<td>
-				<img src="<?php if($category->thumb){ echo "Media/Category/".$this->getMedia($category->thumb)['imageName']; }  ?>" alt="No Image Found" width="50" height="50">
+				<img src="<?php if($category->thumb){ echo "Media/Category/".$category->getThumb()->imageName; }  ?>" alt="No Image Found" width="50" height="50">
 			</td>
 
 			<td>
-				<img src="<?php if($category->small){ echo "Media/Category/".$this->getMedia($category->small)['imageName']; }  ?>" alt="No Image Found" width="50" height="50">
+				<img src="<?php if($category->small){ echo "Media/Category/".$category->getSmall()->imageName; }  ?>" alt="No Image Found" width="50" height="50">
 			</td>
 
 			<td><?php echo $category->createdDate; ?></td>

@@ -53,6 +53,54 @@ class Model_Product extends Model_Core_Row
 			$categoryProductModel->save();
 		}	
 	}
+
+	public function getBase()
+	{
+		$mediaModel = Ccc::getModel('Product_Media'); 
+		if(!$this->base)
+		{
+			return null;
+		}
+		$base = $mediaModel->fetchRow("SELECT * FROM `product_media` WHERE `imageId` = {$this->base}");
+		if(!$base)
+		{
+			return $mediaModel;
+		}
+
+		return $base;
+	}
+	public function getSmall()
+	{
+		$mediaModel = Ccc::getModel('Product_Media'); 
+		if(!$this->small)
+		{
+			return null;
+		}
+		$small = $mediaModel->fetchRow("SELECT * FROM `product_media` WHERE `imageId` = {$this->small}");
+		if(!$small)
+		{
+			return $mediaModel;
+		}
+
+		return $small;
+	}
+	public function getThumb()
+	{
+		$mediaModel = Ccc::getModel('Product_Media'); 
+		if(!$this->thumb)
+		{
+			return null;
+		}
+		$thumb = $mediaModel->fetchRow("SELECT * FROM `product_media` WHERE `imageId` = {$this->thumb}");
+		if(!$thumb)
+		{
+			return $mediaModel;
+		}
+
+		return $thumb;
+	}
+
+	
 	public function getMedia($reload = false)
 	{
 		$mediaModel = Ccc::getModel('Product_Media'); 

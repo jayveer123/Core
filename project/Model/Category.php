@@ -73,7 +73,51 @@ class Model_Category extends Model_Core_Row
 		}
 	}
 
-	
+	public function getBase()
+	{
+		$mediaModel = Ccc::getModel('Category_Media'); 
+		if(!$this->base)
+		{
+			return null;
+		}
+		$base = $mediaModel->fetchRow("SELECT * FROM `category_media` WHERE `imageId` = {$this->base}");
+		if(!$base)
+		{
+			return $mediaModel;
+		}
+
+		return $base;
+	}
+	public function getSmall()
+	{
+		$mediaModel = Ccc::getModel('Category_Media'); 
+		if(!$this->small)
+		{
+			return null;
+		}
+		$small = $mediaModel->fetchRow("SELECT * FROM `category_media` WHERE `imageId` = {$this->small}");
+		if(!$small)
+		{
+			return $mediaModel;
+		}
+
+		return $small;
+	}
+	public function getThumb()
+	{
+		$mediaModel = Ccc::getModel('Category_Media'); 
+		if(!$this->thumb)
+		{
+			return null;
+		}
+		$thumb = $mediaModel->fetchRow("SELECT * FROM `category_media` WHERE `imageId` = {$this->thumb}");
+		if(!$thumb)
+		{
+			return $mediaModel;
+		}
+
+		return $thumb;
+	}
 
 	public function getMedia($reload = false)
 	{
