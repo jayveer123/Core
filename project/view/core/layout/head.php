@@ -51,12 +51,14 @@
     <!-- Paging Script Over -->
 
     <script type="text/javascript">
-    customer = {
+    
+    admin = {
+        type : 'POST',
         url : 'index.php',
+        data : {},
+        datatyper : 'json',
         form : null,
-        params : {
-            email : "jj@gmail.com",
-        },
+        
         setUrl : function(url) {
             this.url = url;
             return this;
@@ -71,12 +73,33 @@
         getData : function() {
             return this.data;
         },
+        setType : function(type) {
+            this.type = type;
+            return this;
+        },
+        getType : function() {
+            return this.type;
+        },
         setForm : function(form) {
-            this.form = jQuery('#' + form);
+            this.form = form;
+            this.prepareFormParam();
             return this;
         },
         getForm : function() {
             return this.form;
+        },
+        prepareFormParam : function(){
+            this.setUrl(this.getForm().attr('action'));
+            this.setType(this.getForm().attr('method'));
+            this.setData(this.getForm().serializeArray());
+            return this;
+        },
+        setDataType : function(dataType) {
+            this.dataType = dataType;
+            return this;
+        },
+        getDataType : function() {
+            return this.dataType;
         },
         validate : function(){
             var canSubmit = true;
@@ -98,6 +121,7 @@
             if(canSubmit == true)
             {
                 this.callSaveAjax();
+                //this.load();
             }
             return false;
         },
@@ -120,30 +144,22 @@
                     $("#done").html(data);
                 }
             });
+        },
+        load : function(){
+            $.ajax({
+                url: this.getUrl(),
+                type: this.getType(),
+                data: this.getData(),
+                success: function(data){
+                    jQuery("#content").html(data);
+                    this.setData({});
+                }             
+            });
         }
-    };  
+    };
+   
     </script>
 
-    <script type="text/javascript">
-        customer.setForm('form');
-        $(document).ready(function(){
-            $("#submit").click(function(){
-                var data = $("#form").serializeArray();
-                customer.setData(data);
-                customer.validate();
-            });
-        });
-    </script>
-
-    <script type="text/javascript">
-        
-        $(document).ready(function(){
-            $(".delete").click(function(){
-                var data = $(this).val();
-                customer.setData({'id' : data});
-                customer.callDeleteAjax();
-            });
-        });
-    </script>
+    
     
 </head>

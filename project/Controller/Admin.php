@@ -18,7 +18,14 @@ class Controller_Admin extends Controller_Admin_Action{
 		$content->addChild($adminGrid,'grid');
 		$this->randerLayout();
 	}
-
+	public function gridContentAction()
+	{
+		$this->setTitle('Admin Grid');
+		$content = $this->getLayout()->getContent();
+		$adminGrid = Ccc::getBlock('Admin_Grid');
+		$content->addChild($adminGrid,'grid');	
+		$this->randerContent();
+	}
 	public function saveAction()
 	{
 		
@@ -65,8 +72,8 @@ class Controller_Admin extends Controller_Admin_Action{
 			{
 				throw new Exception("Record Not Insert", 3);
 			}
-			$message = $this->getMessage()->addMessage('Your Data Save Successfully');
-			echo $message->getMessages()['Success'];
+			/*$message = $this->getMessage()->addMessage('Your Data Save Successfully');
+			echo $message->getMessages()['Success'];*/
 			//$this->redirect('grid','admin',[],true);
 		}
 		catch(Exception $e){
@@ -87,7 +94,7 @@ class Controller_Admin extends Controller_Admin_Action{
 		$adminAdd = Ccc::getBlock('Admin_Edit');
 		Ccc::register('admin',$adminModel);
 		$content->addChild($adminAdd,'add');
-		$this->randerLayout();
+		$this->randerContent();
 	}
 
 	public function editAction()
@@ -113,7 +120,7 @@ class Controller_Admin extends Controller_Admin_Action{
 		$adminEdit = Ccc::getBlock('Admin_Edit');
 		Ccc::register('admin',$adminData);
 		$content->addChild($adminEdit,'edit');
-		$this->randerLayout();
+		$this->randerContent();
 	}
 	public function deleteAction()
 	{
@@ -138,12 +145,12 @@ class Controller_Admin extends Controller_Admin_Action{
 				throw new Exception("Unable to Delet Record.", 3);
 			}
 			$result->delete();
-			$this->getMessage()->addMessage('Admin Data Delted Sucess',1);
-		    $this->redirect('grid','admin',[],true);
+			/*$this->getMessage()->addMessage('Admin Data Delted Sucess',1);
+		    $this->redirect('grid','admin',[],true);*/
 		}
 		catch(Exception $e){
-			$this->getMessage()->addMessage($e->getMessage(),3);
-			$this->redirect('grid','admin',[],true);
+			/*$this->getMessage()->addMessage($e->getMessage(),3);
+			$this->redirect('grid','admin',[],true);*/
 		}
 	}
 

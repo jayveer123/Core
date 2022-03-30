@@ -1,12 +1,6 @@
-<?php
-
-$admin=$this->getAdmin(); 
-
-?>
-
-
+<?php $admin=$this->getAdmin(); ?>
 <h3 align="center">* Data Process For Admin *</h3>
-<p id="done"></p>
+<p id="msg"></p>
 <table align="center">
 
 	<input type="text" name="admin[id]" hidden value="<?php echo $admin->id; ?>" placeholder="Enter First name">
@@ -38,9 +32,10 @@ $admin=$this->getAdmin();
 
 	<tr>
 	<td><input type="button" id="submit" name="submit" value="Save"></td>
-	<td><input type="reset" name="res" id="res" value="Reset"></td>
+	<td><button id="cancel">Cancel</button></td>
 	</tr>
 
 </table>
+
 
 

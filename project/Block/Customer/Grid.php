@@ -86,7 +86,9 @@ class Block_Customer_Grid extends Block_Core_Grid {
 
         $customers=$customerModel->fetchAll("SELECT * FROM `customer` LIMIT {$this->getPager()->getStartLimit()} , {$this->getPager()->getEndLimit()}");
       
-
+        if (!$customers) {
+        	return null;
+        }
         $customerColumn = [];
         foreach ($customers as $customer) {
             $billing = null;

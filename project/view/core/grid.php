@@ -2,13 +2,9 @@
     $collections = $this->getCollection();
     $columns = $this->getColumns();
     $actions =  $this->getActions();
-    $pager = $this->getPager();
-
-
-
-    
+    $pager = $this->getPager();    
 ?>
-<button><a href="<?php echo $this->getUrl('add') ?>">Add New</a></button>
+<button id="addNew">Add</button>
 <table border = "1" width="100%">
     <tr>
         <?php foreach ($columns as $key => $column) :?>
@@ -24,20 +20,15 @@
             <td>No Record Found</td>
         </tr>
     <?php }else{ ?>
-     <?php foreach ($collections as $collection) :?>
-       
+    
+    <?php foreach ($collections as $collection) :?>
     <tr>
         <?php foreach ($columns as $key => $column):?>
-            <td><?php echo $this->getColumnData($column['key'],$collection); ?></td>
+            <td><?php echo $this->getColumnData($column,$collection); ?></td>
         <?php endforeach; ?>
-        <?php foreach ($actions as $action) : ?>
-        <?php if($action['title'] == 'delete'): ?>
+       <?php foreach ($actions as $action) : ?>
             <?php $key = $columns['id']['key']; ?>
-            <td><button type="button" class="delete" value="<?php echo $collection->$key; ?>"><?php echo $action['title']; ?></button></td>
-        <?php else: ?>
-            <?php $method = $action['method']; ?>
-            <td><a href="<?php echo $collection->$method(); ?>"><button><?php echo $action['title'] ?></button></a></td>
-        <?php endif; ?>
+            <td><button type="button" class="<?php echo $action['title'] ?>" value="<?php echo $collection->$key; ?>"><?php echo $action['title']; ?></button></td>
         <?php endforeach; ?>
     </tr>
     <?php endforeach; ?>
@@ -54,11 +45,68 @@
                 <?php endforeach;?>
             </select>
         </tr>
-        <tr><button><a style="<?php echo ($pager->getStart()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getStart()]) ?>">Start</a></button></tr>
-            <tr><button><a style="<?php echo ($pager->getPrev()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getPrev()]) ?>">Prev</a></button>
-            &nbsp;&nbsp;&nbsp;&nbsp;<?php echo "<b>".$pager->getCurrent()."</b>"?>&nbsp;&nbsp;&nbsp;&nbsp;</tr>
-            <tr><button><a style="<?php echo ($pager->getNext()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getNext()]) ?>">Next</a></button></tr>
-            <tr><button><a style="<?php echo ($pager->getEnd()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getEnd()]) ?>">End</a></button></tr>
+
+
+        <tr>
+            <button><a style="<?php echo ($pager->getStart()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getStart()]) ?>">Start</a>
+            </button>
+        </tr>
+
+        <tr>
+            <button><a style="<?php echo ($pager->getPrev()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getPrev()]) ?>">Prev</a>
+            </button>
+            
+        <tr>
+            <?php echo $pager->getCurrent();?>
+        </tr>
+
+        <tr>
+            <button><a style="<?php echo ($pager->getNext()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getNext()]) ?>">Next</a>
+            </button>
+        </tr>
+        
+        <tr>
+            <button><a style="<?php echo ($pager->getEnd()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getEnd()]) ?>">End</a>
+            </button>
+        </tr>
 
     </table>
+
+    <script type="text/javascript"> 
+    
+        $("#addNew").click(function(){
+            var url = "<?php echo $this->getUrl('add'); ?>";
+            admin.setUrl(url);
+            admin.setType('POST');
+            admin.setData($(this).val());
+            admin.load();
+        });
+
+        $(".delete").click(function(){
+            var data = $(this).val();
+            admin.setData({'id' : data});
+            admin.setUrl("<?php echo $this->getUrl('delete'); ?>");
+            admin.callDeleteAjax();
+            admin.setUrl("<?php echo $this->getUrl('gridContent'); ?>");
+            admin.setData({});
+            admin.load();
+        });
+
+        $(".edit").click(function(){
+            var data = $(this).val();
+            admin.setData({'id' : data});
+            admin.setUrl("<?php echo $this->getUrl('edit'); ?>");
+            admin.setType('GET');
+            admin.load();
+        });
+
+        /*$(".price").click(function(){
+            var data = $(this).val();
+            admin.setData({'id' : data});
+            admin.setUrl("<?php //echo $this->getUrl('gridContent','customer_price'); ?>");
+            admin.setType('GET');
+            admin.load();
+        });*/
+
+    </script>
 

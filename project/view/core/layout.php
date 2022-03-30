@@ -7,7 +7,7 @@
             <td><?php echo $this->getHeader()->toHtml(); ?></td>
         </tr>
         <tr>
-            <td><?php echo $this->getContent()->toHtml(); ?></td>
+            <td id="content"><?php echo $this->getContent()->toHtml(); ?></td>
         </tr>
         <tr>
             <td><?php echo $this->getFooter()->toHtml(); ?></td>

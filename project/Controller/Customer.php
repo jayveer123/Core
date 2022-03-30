@@ -21,6 +21,14 @@ class Controller_Customer extends Controller_Admin_Action{
         $this->randerLayout();
 
 	}
+	public function gridContentAction()
+	{
+		$this->setTitle('Customer Grid');
+		$content = $this->getLayout()->getContent();
+		$customerGrid = Ccc::getBlock('Customer_Grid');
+		$content->addChild($customerGrid,'grid');	
+		$this->randerContent();
+	}
 
 	public function saveCustomer()
 	{
@@ -191,7 +199,7 @@ class Controller_Customer extends Controller_Admin_Action{
         Ccc::register('billingAddress',$customer->getBillingAddress());
         Ccc::register('shippingAddress',$customer->getShippingAddress());
         $content->addChild($customerEdit,'edit');
-        $this->randerLayout();
+        $this->randerContent();
 	}
 
 	public function addAction()
@@ -206,7 +214,7 @@ class Controller_Customer extends Controller_Admin_Action{
         Ccc::register('billingAddress',$customerModel->getBillingAddress());
         Ccc::register('shippingAddress',$customerModel->getShippingAddress());
         $content->addChild($customerAdd,'add');
-        $this->randerLayout();
+        $this->randerContent();
 
 	}
 

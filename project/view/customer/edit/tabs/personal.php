@@ -30,6 +30,6 @@
 
 	<tr>
 	<td><input type="button" id="submit" name="submit" value="Save"></td>
-	<td><input type="reset" name="res" id="res" value="Reset"></td>
+	<td><button id="cancel">Cancel</button></td>
 	</tr>
 </table>

@@ -83,11 +83,12 @@ class Block_Core_Grid extends Block_Core_Template
         return $this;
     }
 
-    public function getColumnData($key,$collection)
+    public function getColumnData($column,$collection)
     {
-        if($key == 'stetus')
+        $key = $column['key'];
+        if($key == 'status')
         {
-            return $collection->getStatus($collection->stetus);
+            return $collection->getStatus($collection->status);
         }
         return $collection->$key;
     }

@@ -4,7 +4,7 @@ class Controller_Core_Action{
     protected $layout = null;
     protected $message = null;
     protected $cart = null;
-    public $view = null;
+    //public $view = null;
 
     protected function setTitle($title)
     {
@@ -31,7 +31,15 @@ class Controller_Core_Action{
 
     public function randerLayout()
     {
-        return $this->getLayout()->toHtml();
+        $this->getResponse()
+            ->setHeader('Content-type', 'text/html')
+            ->render($this->getLayout()->toHtml());
+    }
+    public function randerContent()
+    {
+        $this->getResponse()
+            ->setHeader('Content-type', 'text/html')
+            ->render($this->getLayout()->getContent()->toHtml());
     }
 
     public function getAdapter()
@@ -47,7 +55,7 @@ class Controller_Core_Action{
 
     public function redirect($a=null,$c=null,array $data = [],$reset = false)
     {
-        $url = Ccc::getModel('core_view')->getUrl($a,$c,$data,$reset);
+        $url = Ccc::getModel('Core_View')->getUrl($a,$c,$data,$reset);
         header("location: $url");
     }
 
