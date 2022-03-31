@@ -12,6 +12,7 @@ class Block_Core_Edit_Tab extends Block_Core_Template
         $this->prepareTabs();
     }
 
+    
     public function prepareTabs()
     {
         return $this;

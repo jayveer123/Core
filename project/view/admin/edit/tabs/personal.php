@@ -1,6 +1,5 @@
 <?php $admin=$this->getAdmin(); ?>
 <h3 align="center">* Data Process For Admin *</h3>
-<p id="msg"></p>
 <table align="center">
 
 	<input type="text" name="admin[id]" hidden value="<?php echo $admin->id; ?>" placeholder="Enter First name">
@@ -31,11 +30,24 @@
 	</tr>
 
 	<tr>
-	<td><input type="button" id="submit" name="submit" value="Save"></td>
-	<td><button id="cancel">Cancel</button></td>
+	<td><input type="button" id="adminSubmit" name="submit" value="Save"></td>
+	<td><button type="button" id="cancel">Cancel</button></td>
 	</tr>
 
 </table>
+
+<script>
+    $("#adminSubmit").click(function(){
+        admin.setForm($("#indexForm"));
+        admin.setUrl("<?php echo $this->getEdit()->getSaveUrl(); ?>");
+        admin.load();
+    });
+
+    $("#cancel").click(function(){
+        admin.setUrl("<?php echo $this->getUrl('gridBlock','admin'); ?>");
+        admin.load();
+    });
+</script>
 
 
 

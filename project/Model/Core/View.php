@@ -40,12 +40,13 @@ class Model_Core_View {
 	}
 
 	public function toHtml()
-	{
-		ob_start();
-		require($this->getTemplate());
-		$html = ob_get_contents();
-		ob_end_flush();
-	}
+    {
+        ob_start();
+        require($this->getTemplate());
+        $html = ob_get_contents();
+        ob_end_clean();
+        return $html;
+    }
 
 	public function getData($key = null)
 	{

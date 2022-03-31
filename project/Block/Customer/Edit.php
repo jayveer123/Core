@@ -10,9 +10,15 @@ class Block_Customer_Edit extends Block_Core_Edit
 		parent::__construct();
 	}
 	
-	public function getEditUrl()
+	public function getSaveUrl()
 	{
 		return $this->getUrl('save','customer');
+	}
+
+	public function getSavePriceUrl()
+	{
+		
+		return $this->getUrl('save','customer_price');
 	}
 
 }

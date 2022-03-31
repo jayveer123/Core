@@ -103,6 +103,20 @@ $shippingAddress = $this->getShippingAddress();
 			<input type="hidden" name="shippingaddress[billing]" value="2">
 
 		<tr>
-		<td><input type="button" name="submit" id="submit" value="Update"></td>
+		<td><input type="button" name="submit" id="addressSubmit" value="Update"></td>
+		<td><button type="button" id="cancel">Cancel</button></td>
 		</tr>
 </table>
+
+<script>
+    $("#addressSubmit").click(function(){
+        admin.setForm($("#indexForm"));
+        admin.setUrl("<?php echo $this->getEdit()->getSaveUrl(); ?>");
+        admin.load();
+    });
+
+    $("#cancel").click(function(){
+        admin.setUrl("<?php echo $this->getUrl('gridBlock','customer'); ?>");
+        admin.load();
+    });
+</script>

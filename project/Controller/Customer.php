@@ -11,8 +11,120 @@ class Controller_Customer extends Controller_Admin_Action{
             $this->redirect('login','admin_login');
         }
     }
+
+    public function indexAction()
+	{
+
+		$this->setTitle('Customer');
+		$content = $this->getLayout()->getContent();
+		$customergrid = Ccc::getBlock('Customer_Index');
+		$content->addChild($customergrid);
+
+		$this->randerLayout();
+	}
+
+	public function gridBlockAction()
+	{
+		$customerGrid = Ccc::getBlock('Customer_Grid')->toHtml();
+		$messageBlock = Ccc::getBlock('Core_Layout_Message')->toHtml();
+		$response = [
+			'status' => 'success',
+			'elements' => [
+				[
+					'element' => '#indexContent',
+					'content' => $customerGrid
+				],
+				[
+					'element' => '#adminMessage',
+					'content' => $messageBlock
+				]
+			]
+		];
+		$this->randerJson($response);
+	}
+
+	public function addBlockAction()
+	{
+		$customerModel = Ccc::getModel("Customer");
+		$customer = $customerModel;
+		$address = $customerModel;
+
+		Ccc::register('customer',$customer);
+		Ccc::register('billingAddress',$address);
+		Ccc::register('shippingAddress',$address);
+
+		$customerEdit = $this->getLayout()->getBlock('Customer_Edit')->toHtml();
+		$messageBlock = Ccc::getBlock('Core_Layout_Message')->toHtml();
+		$response = [
+			'status' => 'success',
+			'elements' => [
+				[
+					'element' => '#indexContent',
+					'content' => $customerEdit
+				],
+				[
+					'element' => '#adminMessage',
+					'content' => $messageBlock
+				]
+			]
+		];
+		$this->randerJson($response);
+		
+	}
+
+	public function editBlockAction()
+	{
+
+		try {
+			$customerModel = Ccc::getModel("Customer");
+			$addressModel = Ccc::getModel("Customer_Address");
+			$request = $this->getRequest();
+			$customerId = $request->getRequest('id');
+			if(!$customerId){
+				$this->getMessage()->addMessage('Your data con not be fetch', Model_Core_Message::MESSAGE_ERROR);
+				throw new Exception("Error Processing Request", 1);			
+			}
+			if(!(int)$customerId){
+				$this->getMessage()->addMessage('Your data con not be fetch', Model_Core_Message::MESSAGE_ERROR);
+				throw new Exception("Error Processing Request", 1);			
+			}
+			$customer = $customerModel->load($customerId);
+			$bilingAddress = $customer->getBillingAddress();
+			$shipingAddress = $customer->getShippingAddress();
+			if(!$customer){
+				$this->getMessage()->addMessage('Your data con not be fetch', Model_Core_Message::MESSAGE_ERROR);
+				throw new Exception("Error Processing Request", 1);			
+			}
+	
+			Ccc::register('customer',$customer);
+			Ccc::register('billingAddress',$bilingAddress);
+			Ccc::register('shippingAddress',$shipingAddress);
+
+			$customerEdit = Ccc::getBlock('Customer_Edit')->toHtml();
+			$messageBlock = Ccc::getBlock('Core_Layout_Message')->toHtml();
+			$response = [
+				'status' => 'success',
+				'elements' => [
+					[
+						'element' => '#indexContent',
+						'content' => $customerEdit
+					],
+					[
+						'element' => '#adminMessage',
+						'content' => $messageBlock
+					]
+				]
+			];
+			$this->randerJson($response);
+			
+			}catch (Exception $e){
+			$this->getMessage()->addMessage($e->getMessage(),Model_Core_Message::MESSAGE_ERROR);
+			$this->gridBlockAction();
+		}	
+	}
+
     
-	public function gridAction()
+	/*public function gridAction()
 	{
 		$this->setTitle('Customer');
 		$content = $this->getLayout()->getContent();
@@ -20,15 +132,15 @@ class Controller_Customer extends Controller_Admin_Action{
         $content->addChild($customerGrid,'grid');
         $this->randerLayout();
 
-	}
-	public function gridContentAction()
+	}*/
+	/*public function gridContentAction()
 	{
 		$this->setTitle('Customer Grid');
 		$content = $this->getLayout()->getContent();
 		$customerGrid = Ccc::getBlock('Customer_Grid');
 		$content->addChild($customerGrid,'grid');	
 		$this->randerContent();
-	}
+	}*/
 
 	public function saveCustomer()
 	{
@@ -158,17 +270,20 @@ class Controller_Customer extends Controller_Admin_Action{
 			if ($this->getRequest()->getPost('billingaddress') || $this->getRequest()->getPost('shippingaddress'))
 			{
 				$this->saveAddress();			
-			}	
-
-			$this->redirect('grid','customer',[],true);
+			}
+			
+			$this->gridBlockAction();
+			
+			//$this->redirect('grid','customer',[],true);
 		}
 		catch(Exception $e){
-			$this->redirect('grid','customer',[],true);
+			$this->gridBlockAction();
+			//$this->redirect('grid','customer',[],true);
 		}
 		
 	}
 
-	public function editAction()
+	/*public function editAction()
 	{
 		$this->setTitle('Customer Edit');
 		$customerModel = Ccc::getModel('Customer');
@@ -200,9 +315,9 @@ class Controller_Customer extends Controller_Admin_Action{
         Ccc::register('shippingAddress',$customer->getShippingAddress());
         $content->addChild($customerEdit,'edit');
         $this->randerContent();
-	}
+	}*/
 
-	public function addAction()
+	/*public function addAction()
 	{
 		$this->setTitle('Customer Add');
 		$customerModel = Ccc::getModel('Customer');	
@@ -216,7 +331,7 @@ class Controller_Customer extends Controller_Admin_Action{
         $content->addChild($customerAdd,'add');
         $this->randerContent();
 
-	}
+	}*/
 
 	public function deleteAction()
 	{
@@ -242,12 +357,14 @@ class Controller_Customer extends Controller_Admin_Action{
 				$this->getMessage()->addMessage('Data Not Delted',3);
 			}
 			$result->delete();
+
 			$this->getMessage()->addMessage('Data Deleted Successfully',1);
-		    $this->redirect('grid','customer',[],true);
+			$this->gridBlockAction();
+		    //$this->redirect('grid','customer',[],true);
 		}
 		catch(Exception $e){
-			echo "<pre>";
-			print_r($e);
+			$this->getMessage()->addMessage($e->getMessage());
+			$this->gridBlockAction();
 		}
 	}
 

@@ -4,7 +4,7 @@
     $actions =  $this->getActions();
     $pager = $this->getPager();    
 ?>
-<button id="addNew">Add</button>
+<button type="button" id="addNew">Add</button>
 <table border = "1" width="100%">
     <tr>
         <?php foreach ($columns as $key => $column) :?>
@@ -38,7 +38,7 @@
 
 <table>
         <tr>
-            <select onchange="ppr()" id="ppr">
+            <select id="ppr">
                 <option selected>select</option>
                 <?php foreach($pager->getPerPageCountOption() as $perPageCount) :?>  
                 <option value="<?php echo $perPageCount ?>" ><?php echo $perPageCount ?></a></option>
@@ -48,12 +48,12 @@
 
 
         <tr>
-            <button><a style="<?php echo ($pager->getStart()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getStart()]) ?>">Start</a>
+            <button type="button" class="pagerBtn" style="<?php echo ($pager->getStart()==NULL)? "pointer-events: none" : "" ?>" value="<?php echo $this->getUrl('gridBlock',null,['p' => $pager->getStart()]) ?>">Start
             </button>
         </tr>
 
         <tr>
-            <button><a style="<?php echo ($pager->getPrev()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getPrev()]) ?>">Prev</a>
+            <button type="button" class="pagerBtn" style="<?php echo ($pager->getPrev()==NULL)? "pointer-events: none" : "" ?>" value="<?php echo $this->getUrl('gridBlock',null,['p' => $pager->getPrev()]) ?>">Prev
             </button>
             
         <tr>
@@ -61,52 +61,60 @@
         </tr>
 
         <tr>
-            <button><a style="<?php echo ($pager->getNext()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getNext()]) ?>">Next</a>
+            <button type="button" class="pagerBtn" style="<?php echo ($pager->getNext()==NULL)? "pointer-events: none" : "" ?>" value="<?php echo $this->getUrl('gridBlock',null,['p' => $pager->getNext()]) ?>">Next
             </button>
         </tr>
         
         <tr>
-            <button><a style="<?php echo ($pager->getEnd()==NULL)? "pointer-events: none" : "" ?>" href="<?php echo $this->getUrl(null,null,['p' => $pager->getEnd()]) ?>">End</a>
+            <button type="button" class="pagerBtn" style="<?php echo ($pager->getEnd()==NULL)? "pointer-events: none" : "" ?>" value="<?php echo $this->getUrl('gridBlock',null,['p' => $pager->getEnd()]) ?>">End
             </button>
         </tr>
 
     </table>
 
-    <script type="text/javascript"> 
-    
-        $("#addNew").click(function(){
-            var url = "<?php echo $this->getUrl('add'); ?>";
-            admin.setUrl(url);
-            admin.setType('POST');
-            admin.setData($(this).val());
-            admin.load();
-        });
+<script type="text/javascript">
+    $("#addNew").click(function(){
+        admin.setData({'id' : null});
+        admin.setUrl("<?php echo $this->getUrl('addBlock'); ?>");
+        admin.load();
+    });
 
-        $(".delete").click(function(){
-            var data = $(this).val();
-            admin.setData({'id' : data});
-            admin.setUrl("<?php echo $this->getUrl('delete'); ?>");
-            admin.callDeleteAjax();
-            admin.setUrl("<?php echo $this->getUrl('gridContent'); ?>");
-            admin.setData({});
-            admin.load();
-        });
+    $(".delete").click(function(){
+        var data = $(this).val();
+        admin.setData({'id' : data});
+        admin.setType('GET');
+        admin.setUrl("<?php echo $this->getUrl('delete'); ?>");
+        admin.load();
+    });
 
-        $(".edit").click(function(){
-            var data = $(this).val();
-            admin.setData({'id' : data});
-            admin.setUrl("<?php echo $this->getUrl('edit'); ?>");
-            admin.setType('GET');
-            admin.load();
-        });
+    $(".edit").click(function(){
+        var data = $(this).val();
+        admin.setData({'id' : data});
+        admin.setUrl("<?php echo $this->getUrl('editBlock'); ?>");
+        admin.setType('GET');
+        admin.load();
+    });
 
-        /*$(".price").click(function(){
-            var data = $(this).val();
-            admin.setData({'id' : data});
-            admin.setUrl("<?php //echo $this->getUrl('gridContent','customer_price'); ?>");
-            admin.setType('GET');
-            admin.load();
-        });*/
+    $(".price").click(function(){
+        var data = $(this).val();
+        admin.setData({'id' : data});
+        admin.setUrl("<?php echo $this->getUrl('gridBlock','customer_price'); ?>");
+        admin.setType('GET');
+        admin.load();
+    });
 
-    </script>
+    $("#ppr").click(function(){
+        var data = $(this).val();
+        admin.setUrl("<?php echo $this->getUrl('gridBlock',null,['p'=>1,'ppr'=>null]); ?>&ppr="+data);
+        admin.setType('GET');
+        admin.load();
+    });
+    $(".pagerBtn").click(function(){
+        var data = $(this).val();
+        admin.setUrl(data);
+        admin.setType('GET');
+        admin.load();
+    });
+
+</script>
 

@@ -3,9 +3,8 @@
 $products = $this->getProducts();
 
 ?>
-
-<form action="<?php echo $this->getUrl('save','customer_price') ?>" method="post">
-    <input type="submit" value="save">
+    <input type="button" id="priceSave" value="save">
+    <button type="button" id="cancel">Cancel</button>
     <table border="1" width="100%">
         <tr>
             <th>Product Id</th>
@@ -37,4 +36,16 @@ $products = $this->getProducts();
         <?php } ?>
        
     </table>
-</form>
+
+<script>
+    $("#priceSave").click(function(){
+        admin.setForm($("#indexForm"));
+        admin.setUrl("<?php echo $this->getUrl('save','customer_price'); ?>");
+        admin.load();
+    });
+
+    $("#cancel").click(function(){
+        admin.setUrl("<?php echo $this->getUrl('gridBlock','customer'); ?>");
+        admin.load();
+    });
+</script>

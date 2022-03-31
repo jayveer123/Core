@@ -10,22 +10,120 @@ class Controller_Admin extends Controller_Admin_Action{
         }
     }
 
-	public function gridAction()
+	/*public function gridAction()
 	{
 		$this->setTitle('Admin');
 		$content = $this->getLayout()->getContent();
 		$adminGrid = Ccc::getBlock('Admin_Grid');
 		$content->addChild($adminGrid,'grid');
 		$this->randerLayout();
+	}*/
+	public function indexAction()
+	{
+		$this->setTitle('Admin');
+		$content = $this->getLayout()->getContent();
+		$admingrid = Ccc::getBlock('Admin_Index');
+		$content->addChild($admingrid);
+
+		$this->randerLayout();
 	}
-	public function gridContentAction()
+	public function gridBlockAction()
+	{
+		$admingrid = Ccc::getBlock('Admin_Grid')->toHtml();
+		$messageBlock = Ccc::getBlock('Core_Layout_Message')->toHtml();
+		$response = [
+			'status' => 'success',
+			'elements' => [
+				[
+					'element' => '#indexContent',
+					'content' => $admingrid
+				],
+				[
+					'element' => '#adminMessage',
+					'content' => $messageBlock
+				]
+			]
+		];
+		$this->randerJson($response);
+	}
+	public function addBlockAction()
+	{
+		$this->setTitle('Admin Add');
+		$adminModel = Ccc::getModel('Admin');
+		$admin = $adminModel;
+
+		Ccc::register('admin',$admin);
+
+		$adminedit = $this->getLayout()->getBlock('Admin_Edit')->toHtml();
+		$messageBlock = Ccc::getBlock('Core_Layout_Message')->toHtml();
+		$response = [
+			'status' => 'success',
+			'elements' => [
+				[
+					'element' => '#indexContent',
+					'content' => $adminedit
+				],
+				[
+					'element' => '#adminMessage',
+					'content' => $messageBlock
+				]
+			]
+		];
+
+		$this->randerJson($response);
+	}
+	public function editBlockAction()
+	{
+		try{
+			$this->setTitle('Admin Edit');
+			$adminModel = Ccc::getModel('Admin');
+			$admin = $adminModel;
+
+			$request = $this->getRequest();
+			$id = (int)$request->getRequest('id');
+			if(!$id)
+			{
+				$this->getMessage()->addMessage('Id Not Found',3);
+			}
+			$adminData = $admin->load($id);
+			if(!$adminData)
+			{
+				$this->getMessage()->addMessage('Admin Data Cant Find',3);
+			}
+
+			Ccc::register('admin',$adminData);
+
+
+			$adminEdit = Ccc::getBlock('Admin_Edit')->toHtml();
+			$messageBlock = Ccc::getBlock('Core_Layout_Message')->toHtml();
+			$response = [
+				'status' => 'success',
+				'elements' => [
+					[
+						'element' => '#indexContent',
+						'content' => $adminEdit
+					],
+					[
+						'element' => '#adminMessage',
+						'content' => $messageBlock
+					]
+				]
+			];
+			$this->randerJson($response);
+
+		}catch(Exception $e){
+			$this->getMessage()->addMessage($e->getMessage(),Model_Core_Message::MESSAGE_ERROR);
+			$this->gridBlockAction();
+		}
+	}
+	/*public function gridContentAction()
 	{
 		$this->setTitle('Admin Grid');
 		$content = $this->getLayout()->getContent();
 		$adminGrid = Ccc::getBlock('Admin_Grid');
 		$content->addChild($adminGrid,'grid');	
 		$this->randerContent();
-	}
+	}*/
 	public function saveAction()
 	{
 		
@@ -72,18 +170,17 @@ class Controller_Admin extends Controller_Admin_Action{
 			{
 				throw new Exception("Record Not Insert", 3);
 			}
-			/*$message = $this->getMessage()->addMessage('Your Data Save Successfully');
-			echo $message->getMessages()['Success'];*/
-			//$this->redirect('grid','admin',[],true);
+
+			$this->getMessage()->addMessage("Data Inserted",1);
+			$this->gridBlockAction();
 		}
 		catch(Exception $e){
-			$message = $this->getMessage()->addMessage($e->getMessage());
-			echo $message->getMessages()['Error'];
+			$this->gridBlockAction();
 			//$this->redirect('grid','admin',[],true);
 		}
 		
 	}
-	public function addAction()
+	/*public function addAction()
 	{
 		$this->setTitle('Admin Add');
 
@@ -95,9 +192,9 @@ class Controller_Admin extends Controller_Admin_Action{
 		Ccc::register('admin',$adminModel);
 		$content->addChild($adminAdd,'add');
 		$this->randerContent();
-	}
+	}*/
 
-	public function editAction()
+	/*public function editAction()
 	{
 		$this->setTitle('Admin Edit');
 
@@ -121,7 +218,7 @@ class Controller_Admin extends Controller_Admin_Action{
 		Ccc::register('admin',$adminData);
 		$content->addChild($adminEdit,'edit');
 		$this->randerContent();
-	}
+	}*/
 	public function deleteAction()
 	{
 		try{
@@ -145,12 +242,12 @@ class Controller_Admin extends Controller_Admin_Action{
 				throw new Exception("Unable to Delet Record.", 3);
 			}
 			$result->delete();
-			/*$this->getMessage()->addMessage('Admin Data Delted Sucess',1);
-		    $this->redirect('grid','admin',[],true);*/
+
+			$this->getMessage()->addMessage("Data Deleted",1);
+			$this->gridBlockAction();
 		}
 		catch(Exception $e){
-			/*$this->getMessage()->addMessage($e->getMessage(),3);
-			$this->redirect('grid','admin',[],true);*/
+			$this->gridBlockAction();
 		}
 	}
 

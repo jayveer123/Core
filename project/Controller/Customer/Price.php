@@ -3,7 +3,7 @@
 
 class Controller_Customer_Price extends Controller_Core_Action{
 
-	public function gridAction()
+	/*public function gridAction()
 	{
 		$this->setTitle('Customer Price');
 		$content = $this->getLayout()->getContent();
@@ -11,6 +11,26 @@ class Controller_Customer_Price extends Controller_Core_Action{
 		$content->addChild($customerPriceGrid,'grid');
 
 		$this->randerLayout();
+	}*/
+	public function gridBlockAction()
+	{
+		
+		$customerGrid = Ccc::getBlock('Customer_Price_Grid')->toHtml();
+		$messageBlock = Ccc::getBlock('Core_Layout_Message')->toHtml();
+		$response = [
+			'status' => 'success',
+			'elements' => [
+				[
+					'element' => '#indexContent',
+					'content' => $customerGrid
+				],
+				[
+					'element' => '#adminMessage',
+					'content' => $messageBlock
+				]
+			]
+		];
+		$this->randerJson($response);
 	}
 
 	public function saveAction()
@@ -47,11 +67,12 @@ class Controller_Customer_Price extends Controller_Core_Action{
 					}
 				}
 				$this->getMessage()->addMessage('Discount Give Successfully',1);
-				$this->redirect('grid','customer_price',['id' => $customerId],true);
+				$this->gridBlockAction();
+				//$this->redirect('grid','customer_price',['id' => $customerId],true);
 
 			} catch (Exception $e) {
 				$this->getMessage()->addMessage('Invalid Request',3);
-				$this->redirect('grid','customer_price',['id' => $customerId],true);
+				$this->gridBlockAction();
 			}
 	}
 }

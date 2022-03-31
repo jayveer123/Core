@@ -29,7 +29,21 @@
 	</tr>
 
 	<tr>
-	<td><input type="button" id="submit" name="submit" value="Save"></td>
-	<td><button id="cancel">Cancel</button></td>
+	
+	<td><input type="button" id="custSubmit" name="submit" value="Save"></td>
+	<td><button type="button" id="cancel">Cancel</button></td>
 	</tr>
 </table>
+
+<script>
+    $("#custSubmit").click(function(){
+        admin.setForm($("#indexForm"));
+        admin.setUrl("<?php echo $this->getEdit()->getSaveUrl(); ?>");
+        admin.load();
+    });
+
+    $("#cancel").click(function(){
+        admin.setUrl("<?php echo $this->getUrl('gridBlock','customer'); ?>");
+        admin.load();
+    });
+</script>

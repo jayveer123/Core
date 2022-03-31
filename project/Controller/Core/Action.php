@@ -35,6 +35,12 @@ class Controller_Core_Action{
             ->setHeader('Content-type', 'text/html')
             ->render($this->getLayout()->toHtml());
     }
+    public function randerJson($content)
+    {
+        $this->getResponse()
+            ->setHeader('Content-type', 'application/json')
+            ->render(json_encode($content));
+    }
     public function randerContent()
     {
         $this->getResponse()
