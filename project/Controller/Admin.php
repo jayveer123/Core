@@ -10,14 +10,6 @@ class Controller_Admin extends Controller_Admin_Action{
         }
     }
 
-	/*public function gridAction()
-	{
-		$this->setTitle('Admin');
-		$content = $this->getLayout()->getContent();
-		$adminGrid = Ccc::getBlock('Admin_Grid');
-		$content->addChild($adminGrid,'grid');
-		$this->randerLayout();
-	}*/
 	public function indexAction()
 	{
 		$this->setTitle('Admin');
@@ -116,14 +108,7 @@ class Controller_Admin extends Controller_Admin_Action{
 			$this->gridBlockAction();
 		}
 	}
-	/*public function gridContentAction()
-	{
-		$this->setTitle('Admin Grid');
-		$content = $this->getLayout()->getContent();
-		$adminGrid = Ccc::getBlock('Admin_Grid');
-		$content->addChild($adminGrid,'grid');	
-		$this->randerContent();
-	}*/
+	
 	public function saveAction()
 	{
 		
@@ -180,45 +165,7 @@ class Controller_Admin extends Controller_Admin_Action{
 		}
 		
 	}
-	/*public function addAction()
-	{
-		$this->setTitle('Admin Add');
-
-		$adminModel = Ccc::getModel('Admin');
-		$admin = $adminModel;
-
-		$content = $this->getLayout()->getContent();
-		$adminAdd = Ccc::getBlock('Admin_Edit');
-		Ccc::register('admin',$adminModel);
-		$content->addChild($adminAdd,'add');
-		$this->randerContent();
-	}*/
-
-	/*public function editAction()
-	{
-		$this->setTitle('Admin Edit');
-
-		$adminModel = Ccc::getModel('Admin');
-		$admin = $adminModel;
-
-		$request = $this->getRequest();
-		$id = (int)$request->getRequest('id');
-		if(!$id)
-		{
-			$this->getMessage()->addMessage('Id Not Found',3);
-		}
-		$adminData = $admin->load($id);
-		if(!$adminData)
-		{
-			$this->getMessage()->addMessage('Admin Data Cant Find',3);
-		}
-
-		$content = $this->getLayout()->getContent();
-		$adminEdit = Ccc::getBlock('Admin_Edit');
-		Ccc::register('admin',$adminData);
-		$content->addChild($adminEdit,'edit');
-		$this->randerContent();
-	}*/
+	
 	public function deleteAction()
 	{
 		try{

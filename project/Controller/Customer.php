@@ -124,23 +124,7 @@ class Controller_Customer extends Controller_Admin_Action{
 	}
 
     
-	/*public function gridAction()
-	{
-		$this->setTitle('Customer');
-		$content = $this->getLayout()->getContent();
-        $customerGrid = Ccc::getBlock('Customer_Grid');
-        $content->addChild($customerGrid,'grid');
-        $this->randerLayout();
-
-	}*/
-	/*public function gridContentAction()
-	{
-		$this->setTitle('Customer Grid');
-		$content = $this->getLayout()->getContent();
-		$customerGrid = Ccc::getBlock('Customer_Grid');
-		$content->addChild($customerGrid,'grid');	
-		$this->randerContent();
-	}*/
+	
 
 	public function saveCustomer()
 	{
@@ -282,56 +266,6 @@ class Controller_Customer extends Controller_Admin_Action{
 		}
 		
 	}
-
-	/*public function editAction()
-	{
-		$this->setTitle('Customer Edit');
-		$customerModel = Ccc::getModel('Customer');
-		$request = $this->getRequest();
-		$id = (int)$request->getRequest('id');
-		if(!$id)
-		{
-			$this->getMessage()->addMessage('Id Not Found',3);
-		}
-		
-		$customer=$customerModel->load($id);
-		
-		if(!$customer)
-		{	
-			$this->getMessage()->addMessage('Unable To find record',3);
-		}
-		$addressModel = Ccc::getModel('Customer_Address');
-		$address = $addressModel->load($id,'customer_id');
-		if(!$address)
-		{
-			$address = ['customer_id' => $customer['customer_id']];	
-		}
-
-		$content = $this->getLayout()->getContent();
-        $customerEdit = Ccc::getBlock('Customer_Edit');
-        
-        Ccc::register('customer',$customer);
-        Ccc::register('billingAddress',$customer->getBillingAddress());
-        Ccc::register('shippingAddress',$customer->getShippingAddress());
-        $content->addChild($customerEdit,'edit');
-        $this->randerContent();
-	}*/
-
-	/*public function addAction()
-	{
-		$this->setTitle('Customer Add');
-		$customerModel = Ccc::getModel('Customer');	
-		$addressModel = Ccc::getModel('Customer_Address');	
-
-		$content = $this->getLayout()->getContent();
-        $customerAdd = Ccc::getBlock('Customer_Edit');
-        Ccc::register('customer',$customerModel);
-        Ccc::register('billingAddress',$customerModel->getBillingAddress());
-        Ccc::register('shippingAddress',$customerModel->getShippingAddress());
-        $content->addChild($customerAdd,'add');
-        $this->randerContent();
-
-	}*/
 
 	public function deleteAction()
 	{
