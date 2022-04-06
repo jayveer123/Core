@@ -7,5 +7,5 @@
             "password" => "",
             "dbname" => "project_jayveer"
         ],
-        'baseUrl' => "http://localhost/phpGit/core-template/project/",
+        'baseUrl' => "http://localhost/phpGit/Core/core/project/",
     ];
