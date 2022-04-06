@@ -9,25 +9,25 @@ $disabled = (!$items) ? 'disabled' : ""; ?>
         </div>
         <div class="card-body">
             <form action="<?php echo $this->getUrl('placeOrder') ?>" method="POST">
-                <table>
+                <table border="1" width="100%">
                     <tr>
-                        <td align="center">Subtotal</td>
+                        <td align="center">Subtotal : </td>
                         <td align="center"><?php echo (!$this->getTotal()) ? '0' : $this->getTotal(); ?></td>
                     </tr>
                     <tr>
-                        <td align="center">Shipping</td>
+                        <td align="center">Shipping : </td>
                         <td align="center"><?php echo (!$cart->shippingCharge) ? '0' : $cart->shippingCharge;?></td>
                     </tr>
                     <tr>
-                        <td align="center">Tax</td>
+                        <td align="center">Tax : </td>
                         <td align="center"><?php echo (!$this->getTax($cart->cart_id)) ? '0' : $this->getTax($cart->cart_id); ?></td>
                     </tr>
                     <tr>
-                        <td align="center">Discount</td>
+                        <td align="center">Discount : </td>
                         <td align="center"><?php echo $cart->discount; ?></td>
                     </tr>
                     <tr>
-                        <td align="center">Grand Total</td>
+                        <td align="center">Grand Total : </td>
                         <input type="hidden" name="grandTotal" value="<?php echo $this->getTotal() + ($cart->shippingCharge) + $this->getTax($cart->cart_id) - ($cart->discount); ?>">
 
                         <input type="hidden" name="discount" value="<?php echo $cart->discount;?>">
@@ -47,7 +47,6 @@ $disabled = (!$items) ? 'disabled' : ""; ?>
  
 <script>
     $("#placeOrderBtn").click(function(){
-        alert("111");
         admin.setForm(jQuery("#indexForm"));
         admin.setData({
             'grandTotal' : <?php echo $this->getTotal() + ($cart->shippingCharge) + $this->getTax($cart->cart_id) - ($cart->discount); ?>,

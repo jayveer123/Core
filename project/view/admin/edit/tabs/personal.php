@@ -47,10 +47,12 @@
                     <input type="email" name="admin[email]" value="<?php echo $admin->email; ?>" class="form-control" id="exampleInputPassword1" placeholder="Enter Value">
                   </div>
                   
+                  <?php if(!$admin->id){ ?>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
                     <input type="password" name="admin[password]" value="<?php echo $admin->password; ?>" class="form-control" id="exampleInputPassword1" placeholder="Enter Code">
                   </div>
+                  <?php } ?>
 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Stetus</label>

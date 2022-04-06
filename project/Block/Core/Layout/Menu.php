@@ -11,23 +11,17 @@ class Block_Core_Layout_Menu extends Block_Core_Template{
     public function getLoginName()
     {
 
-        $messageModel = Ccc::getModel('Admin_Message');
-        $messages = $messageModel->getSession()->getNamespace();
-
-        if($_SESSION[$messages])
+        $loginModel = Ccc::getModel('Admin_Login');
+        if($loginModel->getLogin())
         {
-            $email = $_SESSION[$messages]['login']['loginId'];
-      
-            if($email){
-                return true;   
-            }
-            return null; 
+            return true;          
         }
         else
         {
-            return null;
+            return false;
         }
     }
+    
 
 
 }

@@ -70,7 +70,7 @@ $items = $cart->getItems(); ?>
 
                 <input type="hidden" name="cartItem[<?php echo $i ?>][product_id]" value="<?php echo $item->product_id ?>">
 
-                <td><img src="Media/Product/<?php echo $image; ?>" alt="No Image Found" width="50" height="50"></td>
+                <td><img src="<?php echo $item->getProduct()->getBase()->getImgPath(); ?>" alt="No Image Found" width="50" height="50"></td>
 
                 <td><?php echo $item->getProduct()->p_name; ?></td>
 
